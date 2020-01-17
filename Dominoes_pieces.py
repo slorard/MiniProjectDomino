@@ -2,9 +2,9 @@
 import random
 class Pieces():
     def __init__(self,Face1,Face2):
-        self.Face1 = Face1
-        self.Face2 = Face2
-        self.DominosFaces = str(Face1) + '-' + str(Face2)
+        self.Face1 = Face1 #Left side of token 
+        self.Face2 = Face2 #Right side of the tokens
+        self.DominosFaces = str(Face1) + '-' + str(Face2) # complete  token
         
 
 dominoes_tokens = []#Put all tokens of the game here
