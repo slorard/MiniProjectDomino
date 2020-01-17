@@ -35,3 +35,5 @@ class table:
         for i in self.tableDomino:
             self.join = " ".join(self.tableDomino)
         print(self.join)
+        
+table = table(dominoes_tokens)
