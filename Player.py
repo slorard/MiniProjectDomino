@@ -16,7 +16,7 @@ class Player:
         
     def drop_tokens(self):
         pass
-subprocess.Popen([r"inicio domino.txt"])
+
 
 player = Player('juancito')
 player.TakeHand(dominoes_tokens)
