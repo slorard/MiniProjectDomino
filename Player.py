@@ -23,14 +23,14 @@ class Player:
             z = int(z)
             for a in range(8):
                 if z == a:
-                    table.appendTokens(sel.hand.pop(a-1), input('Choose what place you want to put'), input('Do you want rotate?') )
+                    table.appendTokens(self.hand.pop(a-1), input('Choose what place you want to put'), input('Do you want rotate?') )
                 elif z > len(self.hand):
                     if self.hand <= 0:
                         print('{} win with...'.format(self.name))
                         break
                     else:
                         table.showDominos()
-                        printJ("You don't have enough tokens to put, choose another.")
+                        print("You don't have enough tokens to put, choose another.")
                         self.show_hand()
                         self.drop_tokens()
                         break
@@ -38,3 +38,4 @@ class Player:
 
         except: 
             print('None')
+    
