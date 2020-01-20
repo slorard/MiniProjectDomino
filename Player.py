@@ -23,7 +23,7 @@ class Player:
             z = int(z)
             for a in range(8):
                 if z == a:
-                    table.appendTokens(self.hand.pop(a-1), input('Choose what place you want to put'), input('Do you want rotate?') )
+                    table.appendTokens(self.hand.pop(a-1), int(input('Choose what place you want to put')), input('Do you want rotate?') )
                 elif z > len(self.hand):
                     if self.hand <= 0:
                         print('{} win with...'.format(self.name))
