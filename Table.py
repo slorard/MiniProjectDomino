@@ -23,7 +23,7 @@ class table:
 
         elif place == 2:
             if reverse == "Y" or "y":
-                self.tableDomino.append(tokensOfPlayer)
+                self.tableDomino.append(tokensOfPlayer[::-1])
                 os.system("clear")
                 return self.tableDomino
             else:
