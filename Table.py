@@ -35,5 +35,10 @@ class table:
         for i in self.tableDomino:
             self.join = " ".join(self.tableDomino)
         print(self.join)
+    
+    def countPoints(self):
+        self.join = self.join.replace("-", "+").replace(" ", "+")
+        totalPoint = eval(self.join)
+        print(totalPoint)
         
 table = table(dominoes_tokens)
