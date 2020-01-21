@@ -21,16 +21,16 @@ class Player:
             z = int(z)
             for a in range(8):
                 if z == a:
-                    table.appendTokens(self.hand.pop(a-1), int(input('Choose what place you want to put: ')), input('Do you want rotate?: ') )
+                    table.appendTokens(self.hand.pop(a-1), int(input('Choose what place you want to put: ')), input('Do you want rotate?, Y or N : ') )
 
-                    if table.place == 1 and table.join[0] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
+                    if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1]:# you can't place a token in the position 1 if that token doesn't go there
                         self.hand.insert(a-1, table.tableDomino.pop(0))
                         table.showDominos()
                         print("esa ficha no va ahi buen caballo\nestas son tus fichas")
                         self.show_hand()
                         self.drop_tokens()
 
-                    if table.place == 2 and table.join[-1] != table.tokensOfPlayer[-1]:#you can't place a token in the position 2 if that token doesn't go there
+                    if table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:#you can't place a token in the position 2 if that token doesn't go there
                         self.hand.insert(a-1, table.tableDomino.pop(-1))
                         table.showDominos()
                         print("esa ficha no va ahi buen caballo\nestas son tus fichas")

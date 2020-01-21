@@ -7,8 +7,12 @@ class table:
         self.points = 0
         self.tableDomino = []
         self.join = None
+        self.place = None
+        self.tokensOfPlayer = None
 
     def appendTokens(self, tokensOfPlayer, place, reverse):
+        self.place = place
+        self.tokensOfPlayer = tokensOfPlayer
         if place == 1:
             if reverse == "Y":
                 self.tableDomino.insert(0, tokensOfPlayer[::-1])
