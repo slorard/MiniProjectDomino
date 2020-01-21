@@ -9,10 +9,8 @@ class table:
         self.join = None
 
     def appendTokens(self, tokensOfPlayer, place, reverse):
-        if tokensOfPlayer == "pass" and place == None and reverse == None:
-            self.tableDomino.append("")
         if place == 1:
-            if reverse == "Y" or "y":
+            if reverse == "Y":
                 self.tableDomino.insert(0, tokensOfPlayer[::-1])
                 os.system("clear")
                 return self.tableDomino
@@ -22,7 +20,7 @@ class table:
                 return self.tableDomino
 
         elif place == 2:
-            if reverse == "Y" or "y":
+            if reverse == "Y":
                 self.tableDomino.append(tokensOfPlayer[::-1])
                 os.system("clear")
                 return self.tableDomino
@@ -35,10 +33,10 @@ class table:
         for i in self.tableDomino:
             self.join = " ".join(self.tableDomino)
         print(self.join)
-    
+
     def countPoints(self):
         self.join = self.join.replace("-", "+").replace(" ", "+")
         totalPoint = eval(self.join)
         print(totalPoint)
-        
+
 table = table(dominoes_tokens)
