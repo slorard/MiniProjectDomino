@@ -34,14 +34,14 @@ class Player:
                     if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1]:# you can't place a token in the position 1 if that token doesn't go there
                         self.hand.insert(a-1, table.tableDomino.pop(0))
                         table.showDominos()
-                        print("esa ficha no va ahi buen caballo\nestas son tus fichas")
+                        print(f"that token does not go there\n{self.name} these are your token")
                         self.show_hand()
                         self.drop_tokens()
 
                     if table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:#you can't place a token in the position 2 if that token doesn't go there
                         self.hand.insert(a-1, table.tableDomino.pop(-1))
                         table.showDominos()
-                        print("esa ficha no va ahi buen caballo\nestas son tus fichas")
+                        print(f"that token does not go there\n{self.name} these are your token")
                         self.show_hand()
                         self.drop_tokens()
 
@@ -56,9 +56,10 @@ class Player:
                         self.drop_tokens()
                         break
         except:
-            table.showDominos()
-            self.show_hand()
-            self.drop_tokens()
+            if len(table.tableDomino) > 1:
+                table.showDominos()
+                self.show_hand()
+                self.drop_tokens()
 
     
    
