@@ -2,22 +2,36 @@ from Dominoes_pieces import dominoes_tokens
 from Player import Player
 from Table import table
 import os
+from playsound import playsound
+import threading
 
 def start():
     jugadores = []
-
-    for i in range (1,5):
+    z = int(input('How many wants to play? '))
+    for i in range (1,z+1):
         jugadores.append(input('Player ' + str(i) + ': '))
+    if z == 2:
+        jugador1 = Player(jugadores[0])
+        jugador2 = Player(jugadores[1])
+        jugador1.TakeHand(dominoes_tokens)
+        jugador2.TakeHand(dominoes_tokens)
+    elif z == 3:
+        jugador1 = Player(jugadores[0])
+        jugador2 = Player(jugadores[1])
+        jugador3 = Player(jugadores[2])
+        jugador1.TakeHand(dominoes_tokens)
+        jugador2.TakeHand(dominoes_tokens)
+        jugador3.TakeHand(dominoes_tokens)
+    else:
+        jugador1 = Player(jugadores[0])
+        jugador2 = Player(jugadores[1])
+        jugador3 = Player(jugadores[2])
+        jugador4 = Player(jugadores[3])
+        jugador1.TakeHand(dominoes_tokens)
+        jugador2.TakeHand(dominoes_tokens)
+        jugador3.TakeHand(dominoes_tokens)
+        jugador4.TakeHand(dominoes_tokens)
 
-    jugador1 = Player(jugadores[0])
-    jugador2 = Player(jugadores[1])
-    jugador3 = Player(jugadores[2])
-    jugador4 = Player(jugadores[3])
-
-    jugador1.TakeHand(dominoes_tokens)
-    jugador2.TakeHand(dominoes_tokens)
-    jugador3.TakeHand(dominoes_tokens)
-    jugador4.TakeHand(dominoes_tokens)
     os.system("clear")
     while True:
         print("it's the turn of: " + jugadores[0])
@@ -40,4 +54,11 @@ def start():
         jugador4.drop_tokens()
         table.showDominos()
 
-start()
+def music():
+    playsound('./music/Bachata.mp3')
+thread1 = threading.Thread(target=start)
+thread2 = threading.Thread(target=music)
+
+
+thread1.start()
+thread2.start()
