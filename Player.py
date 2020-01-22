@@ -1,6 +1,8 @@
-from Dominoes_pieces import dominoes_tokens
-from Table import table
+
+from Table import table, dominoes_tokens
 import os
+
+
 class Player:
 
     def __init__(self,name):
@@ -12,6 +14,7 @@ class Player:
             self.hand.append(tokens.pop())
         return tokens
 
+        
     def show_hand(self):
         numtoken = []
         for i in range(len(self.hand)):
@@ -48,6 +51,7 @@ class Player:
                 elif z > len(self.hand):
                     if len(self.hand) <= 0:
                         print('{} win with...'.format(self.name))
+                        
                         break
                     else:
                         table.showDominos()
@@ -60,6 +64,4 @@ class Player:
                 table.showDominos()
                 self.show_hand()
                 self.drop_tokens()
-
-    
-   
+print(dominoes_tokens)

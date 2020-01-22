@@ -1,6 +1,7 @@
-from Dominoes_pieces import dominoes_tokens
+from random import shuffle
 import os
 
+dominoes_tokens = []
 class table:
     def __init__(self, tokens):
         self.tokens = tokens
@@ -42,5 +43,15 @@ class table:
         self.join = self.join.replace("-", "+").replace(" ", "+")
         totalPoint = eval(self.join)
         print(totalPoint)
+        
+def generate():
+    f = 0
+    for a in range(0,7):
+        for i in range(f,7):
+            faces = str(a) + '-' + str(i)
+            dominoes_tokens.append(faces)
+        f+=1
 
+generate()
+random.shuffle(dominoes_tokens)
 table = table(dominoes_tokens)

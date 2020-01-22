@@ -1,6 +1,5 @@
-from Dominoes_pieces import dominoes_tokens
 from Player import Player
-from Table import table
+from Table import table, dominoes_tokens
 import os
 from playsound import playsound
 import threading
