@@ -13,7 +13,11 @@ class Player:
         return tokens
 
     def show_hand(self):
-        print(self.hand)
+        numtoken = []
+        for i in range(len(self.hand)):
+            numtoken.append(f"   {str(i+1)}  ")
+        print("|"," | ".join(self.hand),"|")
+        print("".join(numtoken))
 
     def drop_tokens(self):
         z = input("choose one to put in the table or write pass if you don't have any token to play: ")
@@ -21,8 +25,12 @@ class Player:
             z = int(z)
             for a in range(8):
                 if z == a:
-                    table.appendTokens(self.hand.pop(a-1), int(input('Choose what place you want to put: ')), input('Do you want rotate?, Y or N : ') )
+                    place = int(input('Choose what place you want to put: '))
+                    rotate = input('Do you want rotate?, Y or N : ')
 
+                    if place == 1 or place ==  2:#in case you put an invalid position
+                        table.appendTokens(self.hand.pop(a-1), place, rotate)
+                
                     if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1]:# you can't place a token in the position 1 if that token doesn't go there
                         self.hand.insert(a-1, table.tableDomino.pop(0))
                         table.showDominos()
@@ -38,7 +46,7 @@ class Player:
                         self.drop_tokens()
 
                 elif z > len(self.hand):
-                    if self.hand <= 0:
+                    if len(self.hand) <= 0:
                         print('{} win with...'.format(self.name))
                         break
                     else:
@@ -47,6 +55,10 @@ class Player:
                         self.show_hand()
                         self.drop_tokens()
                         break
-        except: 
-            print('None')
+        except:
+            table.showDominos()
+            self.show_hand()
+            self.drop_tokens()
+
     
+   
