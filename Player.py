@@ -23,43 +23,41 @@ class Player:
         z = input("choose one to put in the table or write pass if you don't have any token to play: ")
         try:
             z = int(z)
-            for a in range(8):
-                if z == a:
-                    place = int(input('Choose what place you want to put: '))
-                    rotate = input('Do you want rotate?, Y or N : ')
-
-                    if place == 1 or place ==  2:#in case you put an invalid position
-                        table.appendTokens(self.hand.pop(a-1), place, rotate)
-                
-                    if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1]:# you can't place a token in the position 1 if that token doesn't go there
-                        self.hand.insert(a-1, table.tableDomino.pop(0))
-                        table.showDominos()
-                        print(f"that token does not go there\n{self.name} these are your token")
-                        self.show_hand()
-                        self.drop_tokens()
-
-                    if table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:#you can't place a token in the position 2 if that token doesn't go there
-                        self.hand.insert(a-1, table.tableDomino.pop(-1))
-                        table.showDominos()
-                        print(f"that token does not go there\n{self.name} these are your token")
-                        self.show_hand()
-                        self.drop_tokens()
-
-                elif z > len(self.hand):
-                    if len(self.hand) <= 0:
-                        print('{} win with...'.format(self.name))
-                        break
-                    else:
-                        table.showDominos()
-                        print("You don't have enough tokens to put, choose another: ")
-                        self.show_hand()
-                        self.drop_tokens()
-                        break
-        except:
-            if len(table.tableDomino) > 1:
+            if z-1 > len(self.hand):
                 table.showDominos()
+                print("you don't have that token, choose a correct token")
                 self.show_hand()
                 self.drop_tokens()
+
+            place = int(input('Choose what place you want to put: '))
+            rotate = input('Do you want rotate?, Y or N : ')
+
+            if place == 1 or place ==  2:#in case you put an invalid position
+                table.appendTokens(self.hand.pop(z-1), place, rotate)
+                print(table.join[0])
+                print(table.tokensOfPlayer[-1])
+            else:
+                table.showDominos()
+                print("wrong place, choose a place that is correct")
+                self.show_hand()
+                self.drop_tokens()
+        
+            if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1] or table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
+                if place == 2:
+                    self.hand.insert(z-1, table.tableDomino.pop(-1))
+                else:
+                    self.hand.insert(z-1, table.tableDomino.pop(0))
+                table.showDominos()
+                print(f"that token does not go there\n{self.name} these are your token")
+                self.show_hand()
+                self.drop_tokens()
+
+            # if z > len(self.hand):
+            #     if len(self.hand) <= 0:
+            #         print('{} win with...'.format(self.name))
+            #         break
+        except:
+            print("None")
 
     
    

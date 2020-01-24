@@ -13,23 +13,19 @@ class table:
     def appendTokens(self, tokensOfPlayer, place, reverse):
         self.place = place
         self.tokensOfPlayer = tokensOfPlayer
-        if place == 1:
+        if place == 1 or place == 2:
             if reverse == "Y":
-                self.tableDomino.insert(0, tokensOfPlayer[::-1])
+                if place == 2:
+                    self.tableDomino.append(tokensOfPlayer[::-1])
+                else:
+                    self.tableDomino.insert(0, tokensOfPlayer[::-1])
                 os.system("clear")
                 return self.tableDomino
             else:
-                self.tableDomino.insert(0, tokensOfPlayer)
-                os.system("clear")
-                return self.tableDomino
-
-        elif place == 2:
-            if reverse == "Y":
-                self.tableDomino.append(tokensOfPlayer[::-1])
-                os.system("clear")
-                return self.tableDomino
-            else:
-                self.tableDomino.append(tokensOfPlayer)
+                if place == 2:
+                    self.tableDomino.append(tokensOfPlayer)
+                else:
+                    self.tableDomino.insert(0, tokensOfPlayer)
                 os.system("clear")
                 return self.tableDomino
 
@@ -44,3 +40,4 @@ class table:
         print(totalPoint)
 
 table = table(dominoes_tokens)
+
