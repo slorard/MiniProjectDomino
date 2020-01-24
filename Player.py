@@ -64,4 +64,3 @@ class Player:
                 table.showDominos()
                 self.show_hand()
                 self.drop_tokens()
-print(dominoes_tokens)

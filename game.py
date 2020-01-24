@@ -23,28 +23,7 @@ def start():
 
 
     
-    # os.system("clear")
-    # while True:
-    #     print("it's the turn of: " + jugadores[0])
-    #     jugador1.show_hand()
-    #     jugador1.drop_tokens()
-    #     table.showDominos()
-
-    #     print("it's the turn of: " + jugadores[1])
-    #     jugador2.show_hand()
-    #     jugador2.drop_tokens()
-    #     table.showDominos()
-
-    #     print("it's the turn of: " + jugadores[2])
-    #     jugador3.show_hand()
-    #     jugador3.drop_tokens()
-    #     table.showDominos()
-
-    #     print("it's the turn of: " + jugadores[3])
-    #     jugador4.show_hand()
-    #     jugador4.drop_tokens()
-    #     table.showDominos()
-
+   
 def music():
     playsound('./music/Bachata.mp3')
 thread1 = threading.Thread(target=start)
