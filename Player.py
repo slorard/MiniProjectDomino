@@ -23,10 +23,10 @@ class Player:
         print("".join(numtoken))
 
     def drop_tokens(self):
-        z = input("choose one to put in the table or write pass if you don't have any token to play: ")
+        inputGamerToken = input("choose one to put in the table or write pass if you don't have any token to play: ")
         try:
-            z = int(z)
-            if z-1 > len(self.hand):
+            inputGamerToken = int(inputGamerToken)
+            if inputGamerToken-1 > len(self.hand):
                 table.showDominos()
                 print("you don't have that token, choose a correct token")
                 self.show_hand()
@@ -36,7 +36,7 @@ class Player:
             rotate = input('Do you want rotate?, Y or N : ')
 
             if place == 1 or place ==  2:#in case you put an invalid position
-                table.appendTokens(self.hand.pop(z-1), place, rotate)
+                table.appendTokens(self.hand.pop(inputGamerToken-1), place, rotate)
             else:
                 table.showDominos()
                 print("wrong place, choose a place that is correct")
@@ -46,16 +46,23 @@ class Player:
             if rotate != "Y" and table.join[-1] != table.tokensOfPlayer[-1] or rotate != "Y" and table.join[0] != table.tokensOfPlayer[0]:
                 if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1] or table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
                     if place == 2:
-                        self.hand.insert(z-1, table.tableDomino.pop(-1))
+                        self.hand.insert(inputGamerToken-1, table.tableDomino.pop(-1))
                     else:
-                        self.hand.insert(z-1, table.tableDomino.pop(0))
+                        self.hand.insert(inputGamerToken-1, table.tableDomino.pop(0))
                     table.showDominos()
                     print(f"that token does not go there\n{self.name} these are your token")
                     self.show_hand()
                     self.drop_tokens()
         except:
             os.system("clear")
-            print("None")
+            if inputGamerToken != "pass":
+                os.system("clear")
+                print("wrong place, choose a place that is correct")
+                print("it's the turn of: " + self.name)
+                table.showDominos()
+                self.show_hand()
+                self.drop_tokens()
+
 
     
    

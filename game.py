@@ -10,23 +10,21 @@ def createPlayer():
         playerList[i].TakeHand(dominoes_tokens)
 
 
-listHandPlayer = []
-listMaxTokenPlayer = []
-listMaxTokenAllPlayers = []
+listSumTokenPlayer = []
+listMaxAllPlayersToken = []
 maxToken = []
 
 def playerTurn():
     numTokenPlayer = 7
-    for i in range(inputNumPlayer):
-        listMaxTokenPlayer = []
-        listHandPlayer = []
-        for tokenPlayer in range(numTokenPlayer):
-            listHandPlayer.append("".join(playerList[i].hand[tokenPlayer]))
-            listMaxTokenPlayer.append(eval("".join(playerList[i].hand[tokenPlayer]).replace("-","+")))
+    for i in range(inputNumPlayer):#range each player
+        listSumTokenPlayer = []
 
-        listMaxTokenAllPlayers.append(listHandPlayer[listMaxTokenPlayer.index(max(listMaxTokenPlayer))])
+        for playerToken in range(numTokenPlayer):#range each player hand token
+            listSumTokenPlayer.append(eval("".join(playerList[i].hand[playerToken]).replace("-","+")))
 
-    for compareMaxTokenAllPlayer in listMaxTokenAllPlayers:
+        listMaxAllPlayersToken.append(playerList[i].hand[listSumTokenPlayer.index(max(listSumTokenPlayer))])
+
+    for compareMaxTokenAllPlayer in listMaxAllPlayersToken:
         maxToken.append(eval("".join(compareMaxTokenAllPlayer).replace("-","+")))
 
 os.system('clear')
@@ -38,9 +36,9 @@ def start():
         print("it's the turn of: " + playerList[a].name)
         playerList[a].show_hand()
         playerList[a].drop_tokens()
+        table.showDominos()
         if a+1 <= inputNumPlayer:
             a += 1
-        table.showDominos()
 
 createPlayer()
 playerTurn()
