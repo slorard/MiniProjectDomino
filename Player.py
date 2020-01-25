@@ -14,7 +14,7 @@ class Player:
             self.hand.append(tokens.pop())
         return tokens
 
-        
+
     def show_hand(self):
         numtoken = []
         for i in range(len(self.hand)):
@@ -64,5 +64,7 @@ class Player:
                 self.drop_tokens()
 
 
-    
-   
+    def takeOneToken(self):
+        Input = input('Want to take One token from the rest? ')
+        if Input == 'Y':
+            self.hand.append(dominoes_tokens.pop())
