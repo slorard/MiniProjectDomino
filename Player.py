@@ -37,24 +37,24 @@ class Player:
 
             if place == 1 or place ==  2:#in case you put an invalid position
                 table.appendTokens(self.hand.pop(z-1), place, rotate)
-                print(table.join[0])
-                print(table.tokensOfPlayer[-1])
             else:
                 table.showDominos()
                 print("wrong place, choose a place that is correct")
                 self.show_hand()
                 self.drop_tokens()
-        
-            if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1] or table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
-                if place == 2:
-                    self.hand.insert(z-1, table.tableDomino.pop(-1))
-                else:
-                    self.hand.insert(z-1, table.tableDomino.pop(0))
-                table.showDominos()
-                print(f"that token does not go there\n{self.name} these are your token")
-                self.show_hand()
-                self.drop_tokens()
+
+            if rotate != "Y" and table.join[-1] != table.tokensOfPlayer[-1] or rotate != "Y" and table.join[0] != table.tokensOfPlayer[0]:
+                if table.place == 1 and table.join[0] != table.tokensOfPlayer[-1] or table.place == 2 and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
+                    if place == 2:
+                        self.hand.insert(z-1, table.tableDomino.pop(-1))
+                    else:
+                        self.hand.insert(z-1, table.tableDomino.pop(0))
+                    table.showDominos()
+                    print(f"that token does not go there\n{self.name} these are your token")
+                    self.show_hand()
+                    self.drop_tokens()
         except:
+            os.system("clear")
             print("None")
 
     
