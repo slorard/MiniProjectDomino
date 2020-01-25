@@ -14,7 +14,7 @@ class Player:
             self.hand.append(tokens.pop())
         return tokens
 
-        
+
     def show_hand(self):
         numtoken = []
         for i in range(len(self.hand)):
@@ -23,7 +23,14 @@ class Player:
         print("".join(numtoken))
 
     def drop_tokens(self):
-        z = input("choose one to put in the table or write pass if you don't have any token to play: ")
+        z = input("choose one to put in the table or write pass if you don't have any token to play or take: ")
+        if dominoes_tokens != []:
+            if z == 'take':
+                Input = input('Want to take One token from the rest? ')
+                if Input == 'Y':
+                    self.hand.append(dominoes_tokens.pop())
+                    self.show_hand()
+                    self.drop_tokens()
         try:
             z = int(z)
             if z-1 > len(self.hand):
@@ -57,5 +64,7 @@ class Player:
             os.system("clear")
             print("None")
 
-    
-   
+    def takeOneToken(self):
+        Input = input('Want to take One token from the rest? ')
+        if Input == 'Y':
+            self.hand.append(dominoes_tokens.pop())
