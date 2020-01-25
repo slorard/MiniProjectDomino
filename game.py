@@ -4,7 +4,7 @@ from Table import table
 import os
 from playsound import playsound
 import threading
-
+#  english and spanish "wtf"
 def start():
     jugadores = []
     z = int(input('How many wants to play? '))
