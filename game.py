@@ -39,33 +39,39 @@ def win(player):
     if player.hand == []:
         os.system('clear')
         player.points += table.countPoints()
-        print(f"El jugador {player.name} ha ganado con {table.countPoints()} puntos")
-        for i in range(len(table.tableDomino)):
-            dominoes_tokens.append(table.tableDomino.pop())
+
+        for tokenTable in table.tableDomino:
+            dominoes_tokens.append(tokenTable)
         for playerHands in playerList:
             for i in range(len(playerHands.hand)):
                 if playerHands.hand != []:
                     dominoes_tokens.append(playerHands.hand[i])
             playerHands.hand = []
             playerHands.TakeHand(dominoes_tokens)
+            table.join = None
+            table.tableDomino = []
+
+        return False
+    else:
+        return True
 
 
 
 
 
 def start():
-    os.system('clear')
+    table.tableDomino = []
     turns = maxToken.index(max(maxToken))
     table.tableDomino = []
     while gameLoop(playerList[turns]):
         while True:
             print(turnPlayer)
             win(playerList[turns-1])
-            print(playerList[turns].points)
+            print(f"points of player{playerList[turns].name}: {playerList[turns].points}")
             print("it's the turn of: " + playerList[turns].name)
             playerList[turns].show_hand()
             playerList[turns].drop_tokens()
-            table.showDominos()
+            print(table.showDominos())
             if turns+1 <= inputNumPlayer:
                 turns += 1
             if turns+1 > inputNumPlayer:

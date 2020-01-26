@@ -24,14 +24,14 @@ class table:
     def showDominos(self):
         for i in self.tableDomino:
             self.join = " ".join(self.tableDomino)
-        print(self.join)
+        return(self.join)
 
     def countPoints(self):
         join = " ".join(self.tableDomino).replace("-", "+").replace(" ", "+")
         totalPoint = (abs(int(eval(join))) + abs(int(eval(" ".join(dominoes_tokens).replace("-","+").replace(" ", "+")))))
         return int(168 - totalPoint)
 
-def generate():
+def generateTokens():
     f = 0
     for a in range(0,7):
         for i in range(f,7):
@@ -39,6 +39,6 @@ def generate():
             dominoes_tokens.append(faces)
         f+=1
 
-generate()
+generateTokens()
 random.shuffle(dominoes_tokens)
 table = table(dominoes_tokens)
