@@ -27,19 +27,29 @@ def playerTurn():
     for compareMaxTokenAllPlayer in listMaxAllPlayersToken:
         maxToken.append(eval("".join(compareMaxTokenAllPlayer).replace("-","+")))
 
+
+def win(playerHand):
+    # for hand in playerHand:
+    if playerHand.hand == []:
+        print(f"El jugador {playerHand.name} ha ganado con {table.countPoints()} puntos")
+        return False
+    else:
+        return True
+
+
+
 os.system('clear')
 def start():
-    a = maxToken.index(max(maxToken))
-    for i in range(inputNumPlayer*7):
-        if a == inputNumPlayer:
-            a = 0
-        print("it's the turn of: " + playerList[a].name)
-        playerList[a].show_hand()
-        playerList[a].drop_tokens()
+    turns = maxToken.index(max(maxToken))
+    while win(playerList[turns-1]):
+        print("it's the turn of: " + playerList[turns].name)
+        playerList[turns].show_hand()
+        playerList[turns].drop_tokens()
         table.showDominos()
-        if a+1 <= inputNumPlayer:
-            a += 1
-
+        if turns+1 <= inputNumPlayer:
+            turns += 1
+        if turns+1 > inputNumPlayer:
+            turns = 0
 createPlayer()
 playerTurn()
 start()
