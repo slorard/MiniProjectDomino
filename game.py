@@ -28,10 +28,26 @@ def playerTurn():
         maxToken.append(eval("".join(compareMaxTokenAllPlayer).replace("-","+")))
 
 
-def win(playerHand):
-    # for hand in playerHand:
-    if playerHand.hand == []:
-        print(f"El jugador {playerHand.name} ha ganado con {table.countPoints()} puntos")
+def gameLoop(player):
+    if player.points == 200:
+        return False
+    else:
+        return True
+
+def win(player):
+    if player.hand == []:
+        print(f"El jugador {player.name} ha ganado con {table.countPoints()} puntos")
+        player.points += table.countPoints()
+        for tokenTable in table.tableDomino:
+            dominoes_tokens.append(tokenTable)
+        for playerHands in playerList:
+            for i in range(len(playerHands.hand)):
+                if playerHands.hand != []:
+                    dominoes_tokens.append(playerHands.hand[i])
+            playerHands.hand = []
+            playerHands.TakeHand(dominoes_tokens)
+        print(dominoes_tokens)
+        table.tableDomino = []
         return False
     else:
         return True
@@ -41,15 +57,19 @@ def win(playerHand):
 os.system('clear')
 def start():
     turns = maxToken.index(max(maxToken))
-    while win(playerList[turns-1]):
-        print("it's the turn of: " + playerList[turns].name)
-        playerList[turns].show_hand()
-        playerList[turns].drop_tokens()
-        table.showDominos()
-        if turns+1 <= inputNumPlayer:
-            turns += 1
-        if turns+1 > inputNumPlayer:
-            turns = 0
+    while gameLoop(playerList[turns-1]):
+        while True:
+            win(playerList[turns-1])
+            print(playerList[turns-1].points)
+            print("it's the turn of: " + playerList[turns].name)
+            playerList[turns].show_hand()
+            playerList[turns].drop_tokens()
+            table.showDominos()
+            if turns+1 <= inputNumPlayer:
+                turns += 1
+            if turns+1 > inputNumPlayer:
+                turns = 0
+
 createPlayer()
 playerTurn()
 start()
