@@ -30,7 +30,7 @@ class table:
         join = " ".join(self.tableDomino).replace("-", "+").replace(" ", "+")
         totalPoint = (abs(int(eval(join))) + abs(int(eval(" ".join(dominoes_tokens).replace("-","+").replace(" ", "+")))))
         return int(168 - totalPoint)
-         
+
 def generate():
     f = 0
     for a in range(0,7):
