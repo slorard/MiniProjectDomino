@@ -10,7 +10,7 @@ class table:
         self.place = None
         self.tokensOfPlayer = None
 
-    def appendTokens(self, tokensOfPlayer, place, reverse):
+    def appendTokens(self, tokensOfPlayer, place):
         self.place = place
         self.tokensOfPlayer = tokensOfPlayer
         if place == "1" or place == "2":
@@ -25,11 +25,6 @@ class table:
         for i in self.tableDomino:
             self.join = " ".join(self.tableDomino)
         return(self.join)
-
-    def countPoints(self):
-        join = " ".join(self.tableDomino).replace("-", "+").replace(" ", "+")
-        totalPoint = (abs(int(eval(join))) + abs(int(eval(" ".join(dominoes_tokens).replace("-","+").replace(" ", "+")))))
-        return int(168 - totalPoint)
 
 def generateTokens():
     f = 0

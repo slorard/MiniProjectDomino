@@ -17,6 +17,7 @@ class Player:
 
     def show_hand(self):
         numtoken = []
+        table.showDominos()
         for i in range(len(self.hand)):
             numtoken.append(f"   {str(i+1)}  ")
         print("|"," | ".join(self.hand),"|")
@@ -24,7 +25,6 @@ class Player:
 
     def drop_tokens(self):
         inputPlayerToken = input("choose one to put in the table or write pass if you don't have any token to play or take: ")
-
         if dominoes_tokens != [] and inputPlayerToken == 'take':
             Input = input('Want to take One token from the rest?, Y/N ')
             if Input == 'Y':
@@ -54,18 +54,21 @@ class Player:
                 self.drop_tokens()
 
             place = input('Choose what place you want to put: ')
-            rotate = input('Do you want rotate?, Y or N : ')
 
-            if place == "1" or place ==  "2":#in case you put an invalid position
-                if rotate == "Y":
-                    table.appendTokens(self.hand.pop(inputPlayerToken-1)[::-1], place, rotate)
+            if place == "1" or place == "2":#in case you put an invalid position
+                if table.tableDomino != []:
+                    if place == "1" and table.join[0] == self.hand[inputPlayerToken-1][0] or place == "2" and table.join[-1] == self.hand[inputPlayerToken-1][-1]:
+                        table.appendTokens(self.hand.pop(inputPlayerToken-1)[::-1], place)
+                    else:
+                        table.appendTokens(self.hand.pop(inputPlayerToken-1), place)
                 else:
-                    table.appendTokens(self.hand.pop(inputPlayerToken-1), place, rotate)
+                    table.appendTokens(self.hand.pop(inputPlayerToken-1), place)
             else:
                 table.showDominos()
                 print("wrong place, choose a place that is correct")
                 self.show_hand()
                 self.drop_tokens()
+
 
             if place == "1" and table.join[0] != table.tokensOfPlayer[-1] or place == "2" and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
                     if place == "2":
@@ -80,8 +83,8 @@ class Player:
         except:
             os.system("clear")
             if inputPlayerToken == "":
-                table.showDominos()
                 print("wrong token, choose a token that is correct")
+                table.showDominos()
                 self.show_hand()
                 self.drop_tokens()
 
@@ -89,3 +92,14 @@ class Player:
         Input = input('Want to take One token from the rest? ')
         if Input == 'Y':
             self.hand.append(dominoes_tokens.pop())
+            table.showDominos()
+
+    def block(self):
+        i = 0
+        if table.tableDomino != []:
+            for hand in self.hand:
+                if hand[0] != table.join[0] and hand[0] != table.join[-1] and hand[2] != table.join[0] and hand[2] != table.join[-1]:
+                    # print("no tienes fichas para jugar")
+                    i += 1
+                if i == len(self.hand):
+                    print("no tienes fichas")
