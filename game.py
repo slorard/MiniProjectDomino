@@ -1,6 +1,7 @@
 from Player import Player
 from Table import table, dominoes_tokens
 import os
+import random
 
 playerList = []
 inputNumPlayer = int(input('How many wants to play? '))
@@ -9,37 +10,34 @@ def createPlayer():
         playerList.append(Player(input("Player {}: ".format(i + 1))))
         playerList[i].TakeHand(dominoes_tokens)
 
-
 listSumTokenPlayer = []
 listMaxAllPlayersToken = []
 maxToken = []
-
-
-def playerTurn():
+def playerTurnFirst():
     numTokenPlayer = 7
     for i in range(inputNumPlayer):#range each player
         listSumTokenPlayer = []
-
         for playerToken in range(numTokenPlayer):#range each player hand token
             listSumTokenPlayer.append(eval("".join(playerList[i].hand[playerToken]).replace("-","+")))
         listMaxAllPlayersToken.append(playerList[i].hand[listSumTokenPlayer.index(max(listSumTokenPlayer))])
     for compareMaxTokenAllPlayer in listMaxAllPlayersToken:
         maxToken.append(eval("".join(compareMaxTokenAllPlayer).replace("-","+")))
 
-
+def turn():
+    turns = maxToken.index(max(maxToken))
+    return turns
 
 def gameLoop(player):
-    if player.points == 200:
+    if player.points >= 200:
         return False
     else:
         return True
 
-turnPlayer = False
 def win(player):
     if player.hand == []:
         os.system('clear')
         player.points += table.countPoints()
-
+        print(f"{player.name} has won with {table.countPoints()}points, now has {player.points} points")
         for tokenTable in table.tableDomino:
             dominoes_tokens.append(tokenTable)
         for playerHands in playerList:
@@ -47,36 +45,31 @@ def win(player):
                 if playerHands.hand != []:
                     dominoes_tokens.append(playerHands.hand[i])
             playerHands.hand = []
+            random.shuffle(dominoes_tokens)
             playerHands.TakeHand(dominoes_tokens)
             table.join = None
             table.tableDomino = []
 
-        return False
-    else:
-        return True
-
-
-
-
-
 def start():
-    table.tableDomino = []
-    turns = maxToken.index(max(maxToken))
-    table.tableDomino = []
+    turns = turn()
     while gameLoop(playerList[turns]):
         while True:
-            print(turnPlayer)
+            # print(turns)
+            if playerList[turns-1].hand == []:
+                win(playerList[turns-1])
+                turns -= 1
+
             win(playerList[turns-1])
             print(f"points of player{playerList[turns].name}: {playerList[turns].points}")
-            print("it's the turn of: " + playerList[turns].name)
+            print("it's the turns of: " + playerList[turns].name)
             playerList[turns].show_hand()
             playerList[turns].drop_tokens()
             print(table.showDominos())
-            if turns+1 <= inputNumPlayer:
+            if turns+1 < inputNumPlayer:
                 turns += 1
-            if turns+1 > inputNumPlayer:
+            else:
                 turns = 0
 
 createPlayer()
-playerTurn()
+playerTurnFirst()
 start()

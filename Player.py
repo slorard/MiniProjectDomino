@@ -9,13 +9,11 @@ class Player:
         self.name = name
         self.hand =[]#  lterally the player's hand :B
         self.points = 0
-        self.turns = None
 
     def TakeHand(self, tokens, tokens_per_player = 7):# with this method the player can take tokens for his/her hand
         for a in range(tokens_per_player):
             self.hand.append(tokens.pop())
         return tokens
-
 
     def show_hand(self):
         numtoken = []
