@@ -1,46 +1,46 @@
-from Dominoes_pieces import dominoes_tokens
+import random 
 import os
+import time
+dominoes_tokens = []
+
+file = open("./iniciodomino.txt", "r")
+print(file.read())
+time.sleep(2.5)
+os.system("clear")
+
 
 class table:
     def __init__(self, tokens):
         self.tokens = tokens
-        self.points = 0
         self.tableDomino = []
         self.join = None
         self.place = None
         self.tokensOfPlayer = None
 
-    def appendTokens(self, tokensOfPlayer, place, reverse):
+    def appendTokens(self, tokensOfPlayer, place):
         self.place = place
         self.tokensOfPlayer = tokensOfPlayer
-        if place == 1:
-            if reverse == "Y":
-                self.tableDomino.insert(0, tokensOfPlayer[::-1])
-                os.system("clear")
-                return self.tableDomino
+        if place == "L" or place == "R":
+            if place == "R":
+                self.tableDomino.append(tokensOfPlayer)
             else:
                 self.tableDomino.insert(0, tokensOfPlayer)
-                os.system("clear")
-                return self.tableDomino
-
-        elif place == 2:
-            if reverse == "Y":
-                self.tableDomino.append(tokensOfPlayer[::-1])
-                os.system("clear")
-                return self.tableDomino
-            else:
-                self.tableDomino.append(tokensOfPlayer)
-                os.system("clear")
-                return self.tableDomino
+            os.system("clear")
+            return self.tableDomino
 
     def showDominos(self):
         for i in self.tableDomino:
             self.join = " ".join(self.tableDomino)
-        print(self.join)
+        return(self.join)
 
-    def countPoints(self):
-        self.join = self.join.replace("-", "+").replace(" ", "+")
-        totalPoint = eval(self.join)
-        print(totalPoint)
+def generateTokens():
+    f = 0
+    for a in range(0,7):
+        for i in range(f,7):
+            faces = str(a) + '-' + str(i)
+            dominoes_tokens.append(faces)
+        f+=1
 
+generateTokens()
+random.shuffle(dominoes_tokens)
 table = table(dominoes_tokens)
