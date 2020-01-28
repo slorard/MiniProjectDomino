@@ -1,7 +1,14 @@
 import random 
 import os
-
+import time
 dominoes_tokens = []
+
+file = open("./iniciodomino.txt", "r")
+print(file.read())
+time.sleep(2.5)
+os.system("clear")
+
+
 class table:
     def __init__(self, tokens):
         self.tokens = tokens
