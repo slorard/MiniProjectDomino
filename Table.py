@@ -13,8 +13,8 @@ class table:
     def appendTokens(self, tokensOfPlayer, place):
         self.place = place
         self.tokensOfPlayer = tokensOfPlayer
-        if place == "1" or place == "2":
-            if place == "2":
+        if place == "L" or place == "R":
+            if place == "R":
                 self.tableDomino.append(tokensOfPlayer)
             else:
                 self.tableDomino.insert(0, tokensOfPlayer)
