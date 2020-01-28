@@ -62,7 +62,7 @@ def start():
             if playerList[turns-1].hand == []:
                 win(playerList[turns-1])
                 turns -= 1
-            playerList[turns].block()
+
             win(playerList[turns-1])
             print(f"points of player{playerList[turns].name}: {playerList[turns].points}")
             print("it's the turns of: " + playerList[turns].name)
