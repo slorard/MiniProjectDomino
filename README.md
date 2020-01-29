@@ -12,8 +12,8 @@ If in this game there are 2-3 players and you can't play in your turn you can wr
 
 after that you have to choose one of the sides you want to play your token:
 
-L = LEFT
-R = RIGHT
+* L = LEFT
+* R = RIGHT
 
 
 
@@ -34,5 +34,5 @@ Git bash
 
 # Authors
 
-#       Starling Lora
-#       Rivier Grullon
+* Starling Lora
+* Rivier Grullon
