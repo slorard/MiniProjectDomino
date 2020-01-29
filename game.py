@@ -5,16 +5,13 @@ import random
 
 playerList = []
 
-inputNumPlayer = input('How many wants to play? ')
-try:
+while True:
+    inputNumPlayer = input('How many wants to play? ')
     if int(inputNumPlayer) >= 1 and int(inputNumPlayer) <= 4:
-        pass
+        break
     else:
         print("Number of player isn't valide.")
-        os.system("python game.py")
-except:
-    print("Number of player isn't valide.")
-    os.system("python game.py")
+    
 
 
 def createPlayer():
