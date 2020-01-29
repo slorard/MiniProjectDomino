@@ -42,7 +42,7 @@ class Player:
                 self.drop_tokens()
         elif dominoes_tokens == [] and inputPlayerToken == 'take':
             os.system("clear")
-            print(f"{self.name} there is no token on the table to take.")
+            print(f"{self.name} There is no token on the table to take.")
             self.show_hand()
             self.drop_tokens()
 
@@ -84,6 +84,7 @@ class Player:
                 print("Wrong token, choose a token that is correct.")
                 self.show_hand()
                 self.drop_tokens()
+
 
     def takeOneToken(self):
         Input = input('Want to take One token from the rest? ')
