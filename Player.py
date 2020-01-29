@@ -8,7 +8,7 @@ class Player:
     def __init__(self,name):
         self.name = name
         self.hand =[]#  lterally the player's hand :B
-        self.points = 0
+        self.points = 190
 
     def TakeHand(self, tokens, tokens_per_player = 7):# with this method the player can take tokens for his/her hand
         for a in range(tokens_per_player):
@@ -46,52 +46,58 @@ class Player:
             self.show_hand()
             self.drop_tokens()
 
-        try:
-            inputPlayerToken = int(inputPlayerToken)
-            if inputPlayerToken > len(self.hand) or inputPlayerToken < 1:
-                os.system("clear")
-                print("You don't have that token, choose a correct token.")
-                self.show_hand()
-                self.drop_tokens()
+        if inputPlayerToken == "pass":
+            os.system("clear")
+            Player(self.name)
+        else:
+            try:
+                inputPlayerToken = int(inputPlayerToken)
 
-            place = input('Choose what place you want to put, write L(left) or R(right) : ')
+                if inputPlayerToken > len(self.hand) or inputPlayerToken < 1:
+                    os.system("clear")
+                    print("You don't have that token, choose a correct token.")
+                    self.show_hand()
+                    self.drop_tokens()
+            except:
+                os.system("clear")
+                if inputPlayerToken == "" or inputPlayerToken != "pass":
+                    print("Wrong token, choose a token that is correct.")
+                    self.show_hand()
+                    self.drop_tokens()
+
+            place = input('Choose what place you want to put, write L(left) or R(right): ')
 
             if place == "L" or place == "R":#in case you put an invalid position
                 if table.tableDomino != []:
-                    if place == "L" and table.join[0] == self.hand[inputPlayerToken-1][0] or place == "R" and table.join[-1] == self.hand[inputPlayerToken-1][-1]:
-                        table.appendTokens(self.hand.pop(inputPlayerToken-1)[::-1], place)
+                    if place == "L" and table.join[0] == self.hand[int(inputPlayerToken)-1][0] or place == "R" and table.join[-1] == self.hand[int(inputPlayerToken)-1][-1]:
+                        table.appendTokens(self.hand.pop(int(inputPlayerToken)-1)[::-1], place)
                     else:
-                        table.appendTokens(self.hand.pop(inputPlayerToken-1), place)
+                        table.appendTokens(self.hand.pop(int(inputPlayerToken)-1), place)
                 else:
-                    table.appendTokens(self.hand.pop(inputPlayerToken-1), place)
+                    table.appendTokens(self.hand.pop(int(inputPlayerToken)-1), place)
             else:
                 os.system("clear")
                 print("Wrong place, choose a place that is correct.")
                 self.show_hand()
                 self.drop_tokens()
 
-            if place == "L" and table.join[0] != table.tokensOfPlayer[-1] or place == "R" and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
-                    if place == "R":
-                        self.hand.insert(inputPlayerToken-1, table.tableDomino.pop(-1))
-                    else:
-                        self.hand.insert(inputPlayerToken-1, table.tableDomino.pop(0))
-                    print(f"That token does not go there\n{self.name} these are your token.")
-                    self.show_hand()
-                    self.drop_tokens()
-        except:
-            os.system("clear")
-            if inputPlayerToken == "":
-                print("Wrong token, choose a token that is correct.")
+            if len(table.tableDomino) > 1:
+                if place == "L" and table.join[0] != table.tokensOfPlayer[-1] or place == "R" and table.join[-1] != table.tokensOfPlayer[0]:# you can't place a token in the position 1 if that token doesn't go there
+                        if place == "R":
+                            self.hand.insert(int(inputPlayerToken)-1, table.tableDomino.pop(-1))
+                        else:
+                            self.hand.insert(int(inputPlayerToken)-1, table.tableDomino.pop(0))
+                        print(f"That token does not go there\n{self.name} these are your token.")
+                        self.show_hand()
+                        self.drop_tokens()
+
+
+        def takeOneToken(self):
+            Input = input('Want to take One token from the rest? ')
+            if Input == 'Y':
+                self.hand.append(dominoes_tokens.pop())
+            else:
+                table.showDominos()
                 self.show_hand()
                 self.drop_tokens()
-
-
-    def takeOneToken(self):
-        Input = input('Want to take One token from the rest? ')
-        if Input == 'Y':
-            self.hand.append(dominoes_tokens.pop())
-        else:
-            table.showDominos()
-            self.show_hand()
-            self.drop_tokens()
 

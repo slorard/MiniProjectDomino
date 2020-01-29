@@ -2,6 +2,24 @@ from Player import Player
 from Table import table, dominoes_tokens
 import os
 import random
+import time
+
+print("╔══════════════════════════════════════════════════════════╗")
+print("║                                                          ║")
+print("║                   𝓦 𝓮𝓵𝓬𝓸𝓶 𝓮 𝓽𝓸 𝓭𝓸𝓶𝓲𝓷𝓸                    ║")
+print("║         𝓒𝓲𝓷𝓬𝓲𝓷𝓷 𝓪𝓽𝓾𝓼 𝓘𝓷𝓼𝓽𝓲𝓽𝓾𝓽𝓮 𝓸𝓯 𝓒𝓻𝓪𝓯𝓽𝓼𝓶 𝓪𝓷𝓼𝓴𝓲𝓹         ║")
+print("║                                                          ║")
+print("╚══════════════════════════════════════════════════════════╝\n")
+
+time.sleep(1)
+print("◤                                                        ◥\n")
+print("                          𝘾𝙧𝙚𝙖𝙩𝙚 𝙗𝙮                          ")
+print("               𝘚𝘵𝘢𝘳𝘭𝘪𝘯𝘨 𝘓𝘰𝘳𝘢 𝘢𝘯𝘥 𝘙 𝘪𝘷𝘪𝘦𝘳 𝘎𝘳𝘶𝘭𝘭𝘰𝘯                 \n")
+print("◣                                                        ◢")
+
+
+
+
 
 playerList = []
 
@@ -13,7 +31,7 @@ while 1:
             os.system('clear')
             break
         else:
-            print("That number isn't valid, please write one between 2-4")
+            print("That number isn't valid, please write one between 1-4")
     except:
         print('Write a real number')
 
@@ -61,6 +79,7 @@ def block():
             if countTokenDoesntGo == lenHands:
                 return True
 
+
 def win(player):
     if player.hand == [] or block():
         os.system('clear')
@@ -80,19 +99,21 @@ def win(player):
 
 def start():
     turns = turn()
-    while playerList[turns].points <= 200:
-        while True:
-            if playerList[turns-1].hand == [] or block():
-                win(playerList[turns-1])
-                turns -= 1
+    while True:
+        # win(playerList[turns])
+        if playerList[turns-1].hand == [] or block():
             win(playerList[turns-1])
-            playerList[turns].show_hand()
-            playerList[turns].drop_tokens()
-            if turns+1 < int(inputNumPlayer):
-                turns += 1
-            else:
-                turns = 0
-
+            turns -= 1
+        if int(playerList[turns].points) >= 200:
+            print(f"{playerList[turns].name} ha ganado con {playerList[turns].points} puntos")
+            break
+        playerList[turns].show_hand()
+        playerList[turns].drop_tokens()
+        if turns+1 < int(inputNumPlayer):
+            turns += 1
+        else:
+            turns = 0
+        
 createPlayer()
 playerTurnFirst()
 start()

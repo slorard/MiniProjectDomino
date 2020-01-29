@@ -5,7 +5,7 @@ dominoes_tokens = []
 
 file = open("./iniciodomino.txt", "r")
 print(file.read())
-time.sleep(2.5)
+time.sleep(1.5)
 os.system("clear")
 
 
