@@ -3,7 +3,7 @@
 
 # How to run the program 
 
- * Open the folder in Visual Studio code or open the folder and right click
+ * Open the folder and right click
  * select "Bash Here"
  * Run the following command: python game.py
  
