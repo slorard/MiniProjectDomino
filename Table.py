@@ -8,20 +8,17 @@ print(file.read())
 time.sleep(1.5)
 os.system("clear")
 
-
-class table:
+class Table:
     def __init__(self, tokens):
         self.tokens = tokens
         self.tableDomino = []
         self.join = None
-        self.place = None
         self.tokensOfPlayer = None
 
     def appendTokens(self, tokensOfPlayer, place):
-        self.place = place
         self.tokensOfPlayer = tokensOfPlayer
-        if place == "L" or place == "R":
-            if place == "R":
+        if place.upper() == "L" or place.upper() == "R":
+            if place.upper() == "R":
                 self.tableDomino.append(tokensOfPlayer)
             else:
                 self.tableDomino.insert(0, tokensOfPlayer)
@@ -34,13 +31,11 @@ class table:
         return(self.join)
 
 def generateTokens():
-    f = 0
     for a in range(0,7):
-        for i in range(f,7):
+        for i in range(a,7):
             faces = str(a) + '-' + str(i)
             dominoes_tokens.append(faces)
-        f+=1
 
 generateTokens()
 random.shuffle(dominoes_tokens)
-table = table(dominoes_tokens)
+Table = Table(dominoes_tokens)
