@@ -77,11 +77,14 @@ def block():
 def win(player):
     if player.hand == [] or block():
         os.system('clear')
-        player.points += countPoints()
-        if block():
+        if Table.tableDomino != []:
+            player.points += countPoints()
+
+        if Table.tableDomino != [] and block():
             print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
-        else:
+        elif Table.tableDomino != [] and player.hand == []:
             print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
+
         for tokenTable in Table.tableDomino:
             dominoes_tokens.append(tokenTable)
         for playerHands in playerList:
@@ -103,11 +106,11 @@ def start():
             while True:
                 playAgain = input("Do you want to keep playing?, Y/N ")
                 if playAgain.upper() == "Y":
-
                     for i in range(int(inputNumPlayer)):
                         playerList[i].maxToken = listMaxAllPlayersToken[maxToken.index(maxToken[i])]
                     start()
                 elif playAgain.upper() == "N":
+                    return False
                     break
         if int(playerList[turns].points) >= 200:
             print(f"{playerList[turns].name} has won with {playerList[turns].points} points")
@@ -118,8 +121,8 @@ def start():
                     playerTurnFirst()
                     start()
                 elif playAgainLoop.upper() == "N":
-                    return True
-                    break
+                    print("Thank per player :D")
+                    return False
         if Table.tableDomino == []:
             os.system("clear")
             playerList[turns].show_hand()
