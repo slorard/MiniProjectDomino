@@ -4,7 +4,7 @@
  
  * the objective of the game is put all your game tokens in the table before your opponents and get all the points (200  points), the first to reach 200 wins.
 
-> If you want to know more about the real game check this link: 
+> If you want to know more about real game check this link: 
       [Dominoes Game](https://en.wikipedia.org/wiki/Dominoes)
       
 # How to run the program 
