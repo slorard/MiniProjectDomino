@@ -62,7 +62,6 @@ def countPoints():
 
 def block():
         countTokenDoesntGo = 0
-        countTokenGo = 0
         lenHands = 0
         Table.showDominos()
         if Table.tableDomino != []:
@@ -111,7 +110,6 @@ def start():
                     start()
                 elif playAgain.upper() == "N":
                     return False
-                    break
         if int(playerList[turns].points) >= 200:
             print(f"{playerList[turns].name} has won with {playerList[turns].points} points")
             while True:

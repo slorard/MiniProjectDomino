@@ -26,7 +26,7 @@ class Table:
             return self.tableDomino
 
     def showDominos(self):
-        for i in self.tableDomino:
+        for _ in self.tableDomino:
             self.join = " ".join(self.tableDomino)
         return(self.join)
 
