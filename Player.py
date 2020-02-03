@@ -92,7 +92,9 @@ class Player:
                     print("You can take token of the table, you can't pass.")
                     self.show_hand()
                     self.drop_tokens()
-
+    def close(self,inputPlayerToker):
+        if inputPlayerToker == 'exit':
+            os._exit(1)
     def playMaxTokenValidation(self,inputPlayerToken):
         if Table.tableDomino == [] and self.maxToken() != self.hand[int(inputPlayerToken)-1]:
                 os.system("clear")
@@ -111,6 +113,7 @@ class Player:
 
     def drop_tokens(self):
         inputPlayerToken = self.inputToken()
+        self.close(inputPlayerToken)
         self.take(inputPlayerToken)
         self.playerPass(inputPlayerToken)
         try:
