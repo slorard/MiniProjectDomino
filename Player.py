@@ -8,7 +8,8 @@ class Player:
         self.hand =[]
         self.points = 0
 
-    def TakeHand(self, tokens, tokens_per_player = 7):# with this method the player can take tokens for his/her hand
+    def TakeHand(self, tokens):# with this method the player can take tokens for his/her hand
+        tokens_per_player = 7
         for _ in range(tokens_per_player):
             self.hand.append(tokens.pop())
         return tokens
@@ -126,7 +127,7 @@ class Player:
         self.take(inputPlayerToken)
         self.playerPass(inputPlayerToken)
         try:
-            self.rangeHandTokenValidation(inputPlayerToken)
+            # self.rangeHandTokenValidation(inputPlayerToken)
             if Table.tableDomino == []:
                 self.playMaxTokenValidation(inputPlayerToken)
 

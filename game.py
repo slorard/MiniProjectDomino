@@ -3,6 +3,8 @@ from Table import Table, dominoes_tokens
 import os
 import random
 import time
+from playsound import playsound
+import threading
 
 print("╔══════════════════════════════════════════════════════════╗")
 print("║                                                          ║")
@@ -38,6 +40,7 @@ def createPlayer():
     for i in range (int(inputNumPlayer)): #Create the players in a list
         playerList.append(Player(input("Write name of player {}: ".format(i + 1))))
         playerList[i].TakeHand(dominoes_tokens)
+    playsound('./music/baraje2.mp3')
 
 def playerTurnFirst():
     numTokenPlayer = 7
@@ -125,14 +128,23 @@ def start():
             os.system("clear")
             playerList[turns].show_hand()
             playerList[turns].drop_tokens()
+            playsound('./music/golpe.mp3')
         else:
             playerList[turns].show_hand()
             playerList[turns].drop_tokens()
+            playsound('./music/golpe.mp3')
         if turns+1 < int(inputNumPlayer):
             turns += 1
         else:
             turns = 0
+def music():
+    playsound('./music/Bachata.mp3')
 
 createPlayer()
 playerTurnFirst()
-start()
+
+thread1 = threading.Thread(target = start)
+thread2 = threading.Thread(target= music)
+
+thread1.start()
+thread2.start()
