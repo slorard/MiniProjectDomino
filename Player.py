@@ -26,10 +26,10 @@ class Player:
 
     def maxToken(self):
         maxTokeHand = []
-        if Table.tableDomino == []:
-            for i in self.hand:
-                maxTokeHand.append(eval(i.replace("-","+")))
-            return self.hand[maxTokeHand.index(max(maxTokeHand))]
+
+        for i in self.hand:
+            maxTokeHand.append(eval(i.replace("-","+")))
+        return self.hand[maxTokeHand.index(max(maxTokeHand))]
 
     def tokensYouCanPlay(self):
         tokensYouCanPlay = 0

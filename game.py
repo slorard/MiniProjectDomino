@@ -4,7 +4,6 @@ import os
 import random
 import time
 from playsound import playsound
-import threading
 
 print("╔══════════════════════════════════════════════════════════╗")
 print("║                                                          ║")
@@ -67,7 +66,7 @@ def block():
         countTokenDoesntGo = 0
         lenHands = 0
         Table.showDominos()
-        if Table.tableDomino != []:
+        if Table.tableDomino != [] and dominoes_tokens == []:
             for player in playerList:
                 lenHands += len(player.hand)
                 for i in range(len(player.hand)):
@@ -108,8 +107,6 @@ def start():
             while True:
                 playAgain = input("Do you want to keep playing?, Y/N ")
                 if playAgain.upper() == "Y":
-                    for i in range(int(inputNumPlayer)):
-                        playerList[i].maxToken = listMaxAllPlayersToken[maxToken.index(maxToken[i])]
                     start()
                 elif playAgain.upper() == "N":
                     print('Thanks for play! :D')
@@ -140,14 +137,7 @@ def start():
             turns += 1
         else:
             turns = 0
-def music():
-    playsound('./music/Bachata.mp3')
 
 createPlayer()
 playerTurnFirst()
-
-thread1 = threading.Thread(target = start)
-thread2 = threading.Thread(target= music)
-
-thread1.start()
-thread2.start()
+start()
