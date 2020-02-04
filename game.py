@@ -4,6 +4,7 @@ import os
 import random
 import time
 from playsound import playsound
+import threading
 
 print("╔══════════════════════════════════════════════════════════╗")
 print("║                                                          ║")
@@ -138,6 +139,13 @@ def start():
         else:
             turns = 0
 
+def music():
+    playsound('./music/Bachata.mp3')
 createPlayer()
 playerTurnFirst()
-start()
+
+thread1 = threading.Thread(target= start)
+thread2 = threading.Thread(target= music)
+
+thread1.start()
+thread2.start()
