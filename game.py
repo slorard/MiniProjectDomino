@@ -112,7 +112,9 @@ def start():
                         playerList[i].maxToken = listMaxAllPlayersToken[maxToken.index(maxToken[i])]
                     start()
                 elif playAgain.upper() == "N":
-                    return False
+                    print('Thanks for play! :D')
+                    time.sleep(1.5)
+                    os._exit(1)
         if int(playerList[turns].points) >= 200:
             print(f"{playerList[turns].name} has won with {playerList[turns].points} points")
             while True:
@@ -122,8 +124,9 @@ def start():
                     playerTurnFirst()
                     start()
                 elif playAgainLoop.upper() == "N":
-                    print("Thank per player :D")
-                    return False
+                    print("Thanks for play! :D")
+                    time.sleep(1.5)
+                    os._exit(1)
         if Table.tableDomino == []:
             os.system("clear")
             playerList[turns].show_hand()
