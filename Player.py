@@ -1,4 +1,3 @@
-
 from Table import Table, dominoesTokens
 import os
 
@@ -91,7 +90,6 @@ class Player:
                     print("You can take token of the table, you can't pass.")
                     self.showHand()
                     self.dropTokens()
-
     def close(self,inputPlayerToker):
         if inputPlayerToker == 'exit':
             os._exit(1)
