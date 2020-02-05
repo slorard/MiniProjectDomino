@@ -1,5 +1,5 @@
 from Player import Player
-from Table import Table, dominoes_tokens
+from Table import Table, dominoesTokens
 import os
 import random
 import time
@@ -39,7 +39,7 @@ while 1:
 def createPlayer():
     for i in range (int(inputNumPlayer)): #Create the players in a list
         playerList.append(Player(input("Write name of player {}: ".format(i + 1))))
-        playerList[i].TakeHand(dominoes_tokens)
+        playerList[i].TakeHand(dominoesTokens)
     playsound('./music/baraje2.mp3')
 
 def playerTurnFirst():
@@ -59,15 +59,15 @@ def turn():
 def countPoints():
     join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")
     totalPoint = (abs(int(eval(join))))
-    if dominoes_tokens != []:
-        totalPoint += abs(int(eval(" ".join(dominoes_tokens).replace("-","+").replace(" ", "+"))))
+    if dominoesTokens != []:
+        totalPoint += abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
     return int(168 - totalPoint)
 
 def block():
         countTokenDoesntGo = 0
         lenHands = 0
         Table.showDominos()
-        if Table.tableDomino != [] and dominoes_tokens == []:
+        if Table.tableDomino != [] and dominoesTokens == []:
             for player in playerList:
                 lenHands += len(player.hand)
                 for i in range(len(player.hand)):
@@ -88,26 +88,27 @@ def win(player):
             print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
 
         for tokenTable in Table.tableDomino:
-            dominoes_tokens.append(tokenTable)
+            dominoesTokens.append(tokenTable)
         for playerHands in playerList:
             for i in range(len(playerHands.hand)):
                 if playerHands.hand != []:
-                    dominoes_tokens.append(playerHands.hand[i])
+                    dominoesTokens.append(playerHands.hand[i])
             playerHands.hand = []
-            random.shuffle(dominoes_tokens)
-            playerHands.TakeHand(dominoes_tokens)
+            random.shuffle(dominoesTokens)
+            playerHands.TakeHand(dominoesTokens)
             Table.join = None
             Table.tableDomino = []
 
 def start():
     turns = turn()
     while True:
-        if playerList[turns-1].hand == [] or block() and dominoes_tokens != []:
+        if playerList[turns-1].hand == [] or block() and dominoesTokens != []:
             win(playerList[turns-1])
             turns -= 1
             while True:
                 playAgain = input("Do you want to keep playing?, Y/N ")
                 if playAgain.upper() == "Y":
+                    turns -= 1
                     start()
                 elif playAgain.upper() == "N":
                     print('Thanks for play! :D')
@@ -127,12 +128,12 @@ def start():
                     os._exit(1)
         if Table.tableDomino == []:
             os.system("clear")
-            playerList[turns].show_hand()
-            playerList[turns].drop_tokens()
+            playerList[turns].showHand()
+            playerList[turns].dropTokens()
             playsound('./music/golpe.mp3')
         else:
-            playerList[turns].show_hand()
-            playerList[turns].drop_tokens()
+            playerList[turns].showHand()
+            playerList[turns].dropTokens()
             playsound('./music/golpe.mp3')
         if turns+1 < int(inputNumPlayer):
             turns += 1
