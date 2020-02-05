@@ -1,7 +1,7 @@
 import random 
 import os
 import time
-dominoes_tokens = []
+dominoesTokens = []
 
 file = open("./iniciodomino.txt", "r")
 print(file.read())
@@ -34,8 +34,8 @@ def generateTokens():
     for a in range(0,7):
         for i in range(a,7):
             faces = str(a) + '-' + str(i)
-            dominoes_tokens.append(faces)
+            dominoesTokens.append(faces)
 
 generateTokens()
-random.shuffle(dominoes_tokens)
-Table = Table(dominoes_tokens)
+random.shuffle(dominoesTokens)
+Table = Table(dominoesTokens)
