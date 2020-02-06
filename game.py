@@ -1,5 +1,5 @@
 from Player import Player
-from Table import Table, dominoesTokens
+from Table import Table, dominoesTokens, generateTokens
 import os
 import random
 import time
@@ -19,9 +19,6 @@ print("               𝘚𝘵𝘢𝘳𝘭𝘪𝘯𝘨 𝘓𝘰𝘳𝘢 𝘢𝘯
 print("◣                                                        ◢")
 
 playerList = []
-
-listSumTokenPlayer = []
-listMaxAllPlayersToken = []
 
 while True:
     inputNumPlayer = input('How many wants to play? ')
@@ -45,25 +42,12 @@ def playerTurnFirst():
     maxToken = 0
     numTokenPlayer = 7
     for player in range(int(inputNumPlayer)):#range each player
-        print(playerList[player].hand)
         for i in range(numTokenPlayer):#range each player hand token
-            if eval(playerList[player].hand[i].replace("-","+")) > eval(playerList[player].hand[i-1].replace("-","+")):
-                if eval(str(maxToken).replace("-","+")) > eval(playerList[player].hand[i].replace("-","+")):
-                    pass
-                else:
-                    playerTurn = player
-                    maxToken = playerList[player].hand[i]
-            else:
-                if eval(str(maxToken).replace("-","+")) > eval(playerList[player].hand[i-1].replace("-","+")):
-                    pass
-                else:
-                    playerTurn = player
-                    maxToken = playerList[player].hand[i-1]
+            test = eval(playerList[player].hand[i-1].replace("-","+"))
+            if test > maxToken:
+                playerTurn = player
+                maxToken = test
     return playerTurn
-
-def turn():
-    turns = playerTurnFirst
-    return turns
 
 def countPoints():
     join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")
@@ -77,10 +61,12 @@ def block():
         lenHands = 0
         tokensGoOfDominoesToken = 0
         Table.showDominos()
+
         if Table.tableDomino != []:
             for tokens in dominoesTokens:
                 if Table.join[0] != tokens[0] and Table.join[0] != tokens[-1] and Table.join[-1] != tokens[0] and Table.join[-1] != tokens[-1]:
                     tokensGoOfDominoesToken += 1
+
             if Table.tableDomino != [] and tokensGoOfDominoesToken == len(dominoesTokens):
                 for player in playerList:
                     lenHands += len(player.hand)
@@ -90,46 +76,39 @@ def block():
                 if countTokenDoesntGo == lenHands:
                     return True
 
-def win(player):
-    if player.hand == [] or block():
-        os.system('clear')
-        if Table.tableDomino != []:
-            player.points += countPoints()
+def againPlay(player):
+    os.system('clear')
+    if Table.tableDomino != []:
+        player.points += countPoints()
 
-        if Table.tableDomino != [] and block():
-            print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
-        elif Table.tableDomino != [] and player.hand == []:
-            print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
+    if Table.tableDomino != [] and block():
+        print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
+    elif Table.tableDomino != [] and player.hand == []:
+        print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
 
-        for tokenTable in Table.tableDomino:
-            dominoesTokens.append(tokenTable)
-        for playerHands in playerList:
-            for i in range(len(playerHands.hand)):
-                if playerHands.hand != []:
-                    dominoesTokens.append(playerHands.hand[i])
-            playerHands.hand = []
-            random.shuffle(dominoesTokens)
-            playerHands.TakeHand(dominoesTokens)
-            Table.join = None
-            Table.tableDomino = []
+    Table.join = None
+    Table.tableDomino = []
 
-def start():
-    turns = playerTurnFirst()
+    generateTokens()
+    random.shuffle(dominoesTokens)
+
+    for player in playerList:
+        player.hand = []
+        player.TakeHand(dominoesTokens)
+
+def askAgainPlay(turns):
     while True:
-        if playerList[turns-1].hand == [] or block():
-            win(playerList[turns-1])
+        playAgain = input("Do you want to keep playing?, Y/N ")
+        if playAgain.upper() == "Y":
             turns -= 1
-            while True:
-                playAgain = input("Do you want to keep playing?, Y/N ")
-                if playAgain.upper() == "Y":
-                    turns -= 1
-                    start()
-                elif playAgain.upper() == "N":
-                    print('Thanks for play! :D')
-                    time.sleep(1.5)
-                    os._exit(1)
+            start()
+        elif playAgain.upper() == "N":
+            print('Thanks for play! :D')
+            time.sleep(1.5)
+            os._exit(1)
 
-        if int(playerList[turns].points) >= 200:
+def checkWin(turns):
+    if int(playerList[turns].points) >= 200:
             print(f"{playerList[turns].name} has won with {playerList[turns].points} points")
             while True:
                 playAgainLoop = input("Do you want to keep playing?, Y/N ")
@@ -142,15 +121,21 @@ def start():
                     time.sleep(1.5)
                     os._exit(1)
 
-        if Table.tableDomino == []:
-            os.system("clear")
-            playerList[turns].showHand()
-            playerList[turns].dropTokens()
-            playsound('./music/golpe.mp3')
-        else:
-            playerList[turns].showHand()
-            playerList[turns].dropTokens()
-            playsound('./music/golpe.mp3')
+
+def start():
+    turns = playerTurnFirst()
+    while True:
+        if playerList[turns-1].hand == [] or block():
+            againPlay(playerList[turns-1])
+            turns -= 2
+            askAgainPlay(turns)
+
+        checkWin(turns)
+
+        playerList[turns].showHand()
+        playerList[turns].dropTokens()
+        playsound('./music/golpe.mp3')
+
         if turns+1 < int(inputNumPlayer):
             turns += 1
         else:
@@ -158,6 +143,7 @@ def start():
 
 def music():
     playsound('./music/Bachata.mp3')
+
 createPlayer()
 
 thread1 = threading.Thread(target= start)
