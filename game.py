@@ -22,7 +22,6 @@ playerList = []
 
 listSumTokenPlayer = []
 listMaxAllPlayersToken = []
-maxToken = []
 
 while True:
     inputNumPlayer = input('How many wants to play? ')
@@ -42,17 +41,28 @@ def createPlayer():
     playsound('./music/baraje2.mp3')
 
 def playerTurnFirst():
+    playerTurn = 0
+    maxToken = 0
     numTokenPlayer = 7
-    for i in range(int(inputNumPlayer)):#range each player
-        listSumTokenPlayer = []
-        for playerToken in range(numTokenPlayer):#range each player hand token
-            listSumTokenPlayer.append(eval("".join(playerList[i].hand[playerToken]).replace("-","+")))
-        listMaxAllPlayersToken.append(playerList[i].hand[listSumTokenPlayer.index(max(listSumTokenPlayer))])
-    for compareMaxTokenAllPlayer in listMaxAllPlayersToken:
-        maxToken.append(eval("".join(compareMaxTokenAllPlayer).replace("-","+")))
+    for player in range(int(inputNumPlayer)):#range each player
+        print(playerList[player].hand)
+        for i in range(numTokenPlayer):#range each player hand token
+            if eval(playerList[player].hand[i].replace("-","+")) > eval(playerList[player].hand[i-1].replace("-","+")):
+                if eval(str(maxToken).replace("-","+")) > eval(playerList[player].hand[i].replace("-","+")):
+                    pass
+                else:
+                    playerTurn = player
+                    maxToken = playerList[player].hand[i]
+            else:
+                if eval(str(maxToken).replace("-","+")) > eval(playerList[player].hand[i-1].replace("-","+")):
+                    pass
+                else:
+                    playerTurn = player
+                    maxToken = playerList[player].hand[i-1]
+    return playerTurn
 
 def turn():
-    turns = maxToken.index(max(maxToken))
+    turns = playerTurnFirst
     return turns
 
 def countPoints():
@@ -104,7 +114,7 @@ def win(player):
             Table.tableDomino = []
 
 def start():
-    turns = turn()
+    turns = playerTurnFirst()
     while True:
         if playerList[turns-1].hand == [] or block():
             win(playerList[turns-1])
@@ -149,7 +159,6 @@ def start():
 def music():
     playsound('./music/Bachata.mp3')
 createPlayer()
-playerTurnFirst()
 
 thread1 = threading.Thread(target= start)
 thread2 = threading.Thread(target= music)
