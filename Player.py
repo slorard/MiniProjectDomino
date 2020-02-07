@@ -8,20 +8,20 @@ class Player:
         self.points = 0
 
     def TakeHand(self, tokens):# with this method the player can take tokens for his/her hand
-        tokens_per_player = 7
-        for _ in range(tokens_per_player):
+        tokensPerPlayer = 7
+        for _ in range(tokensPerPlayer):
             self.hand.append(tokens.pop())
         return tokens
 
     def showHand(self):
-        numtoken = []
+        numToken = []
         for i in range(len(self.hand)):
-            numtoken.append(f"   {str(i+1)}  ")
+            numToken.append(f"   {str(i+1)}  ")
         if Table.tableDomino != []:
             print(Table.showDominos())
         print(f"It's the turns of: {self.name}.")
         print("|"," | ".join(self.hand),"|")
-        print("".join(numtoken))
+        print("".join(numToken))
 
     def maxToken(self):
         maxTokeHand = []
@@ -35,6 +35,8 @@ class Player:
             for hand in self.hand:
                 if hand[0] != Table.join[0] and hand[0] != Table.join[-1] and hand[2] != Table.join[0] and hand[2] != Table.join[-1]:
                     tokensYouCanPlay += 1
+                else:
+                    break
         return tokensYouCanPlay
 
     def inputToken(self):
@@ -48,48 +50,47 @@ class Player:
             return inputPlayerToken
 
     def take(self,inputPlayerToken):
-        if inputPlayerToken.lower() == 'take':
-            if dominoesTokens == [] and inputPlayerToken.lower() == 'take':
-                os.system("clear")
-                print(f"{self.name} There is no token on the table to take.")
-                self.showHand()
-                self.dropTokens()
-            if self.tokensYouCanPlay() == len(self.hand) and inputPlayerToken.lower() == "take":
-                if dominoesTokens != [] and inputPlayerToken.lower() == 'take':
-                    Input = input('Want to take One token from the rest?, Y/N ')
-                    if Input.upper() == 'Y':
-                        os.system("clear")
-                        self.hand.append(dominoesTokens.pop())
-                        self.showHand()
-                        self.dropTokens()
-                    else:
-                        os.system("clear")
-                        if Input.upper() != "N":
-                            print("You can't take that token.")
-                        self.showHand()
-                        self.dropTokens()
-            elif self.tokensYouCanPlay() != len(self.hand) and inputPlayerToken.lower() == "take":
-                os.system("clear")
-                print("You can't take, because you have tokens to play.")
-                self.showHand()
-                self.dropTokens()
-
-    def playerPass(self,inputPlayerToken):
-        if inputPlayerToken.lower() == "pass":
-            if self.tokensYouCanPlay() == len(self.hand) and dominoesTokens == []:
-                os.system("clear")
-                Player(self.name)
-            else:
-                if self.tokensYouCanPlay() != len(self.hand):
+        if dominoesTokens == []:
+            os.system("clear")
+            print(f"{self.name} There is no token on the table to take.")
+            self.showHand()
+            self.dropTokens()
+        if self.tokensYouCanPlay() == len(self.hand):
+            if dominoesTokens != []:
+                Input = input('Want to take One token from the rest?, Y/N ')
+                if Input.upper() == 'Y':
                     os.system("clear")
-                    print("You have token to play, you can't pass.")
+                    self.hand.append(dominoesTokens.pop())
                     self.showHand()
                     self.dropTokens()
                 else:
                     os.system("clear")
-                    print("You can take token of the table, you can't pass.")
+                    if Input.upper() != "N":
+                        print("You can't take that token.")
                     self.showHand()
                     self.dropTokens()
+        else:
+            os.system("clear")
+            print("You can't take, because you have tokens to play.")
+            self.showHand()
+            self.dropTokens()
+
+    def playerPass(self,inputPlayerToken):
+        if self.tokensYouCanPlay() == len(self.hand) and dominoesTokens == []:
+            os.system("clear")
+            Player(self.name)
+        else:
+            if self.tokensYouCanPlay() != len(self.hand):
+                os.system("clear")
+                print("You have token to play, you can't pass.")
+                self.showHand()
+                self.dropTokens()
+            else:
+                os.system("clear")
+                print("You can take token of the table, you can't pass.")
+                self.showHand()
+                self.dropTokens()
+
     def close(self,inputPlayerToker):
         if inputPlayerToker == 'exit':
             os._exit(1)
@@ -113,8 +114,10 @@ class Player:
     def dropTokens(self):
         inputPlayerToken = self.inputToken()
         self.close(inputPlayerToken)
-        self.take(inputPlayerToken)
-        self.playerPass(inputPlayerToken)
+        if inputPlayerToken.lower() == 'take':
+            self.take(inputPlayerToken)
+        if inputPlayerToken.lower() == "pass":
+            self.playerPass(inputPlayerToken)
         try:
             if int(inputPlayerToken) <= len(self.hand) and int(inputPlayerToken) >= 1:
                 self.playMaxTokenValidation(inputPlayerToken)
