@@ -4,7 +4,11 @@ import time
 dominoesTokens = []
 
 file = open("./iniciodomino.txt", "r")
+presentation = open("./presentation.txt", "r")
 print(file.read())
+time.sleep(1.5)
+os.system("clear")
+print(presentation.read())
 time.sleep(1.5)
 os.system("clear")
 
