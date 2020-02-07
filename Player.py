@@ -41,10 +41,10 @@ class Player:
         if Table.tableDomino == []:
             print(f"You have to play {self.maxToken()},because it is your highest value token.")
         if dominoesTokens == []:
-            inputPlayerToken = input("Choose one to put in the table or write 'pass' if you don't have any token to play: ")
+            inputPlayerToken = input("Choose one to put in the table or write 'pass' if you don't have any token to play or write exit to close the game: ")
             return inputPlayerToken
         else:
-            inputPlayerToken = input("Choose one to put in the table or 'take' if you don't have any token to play: ")
+            inputPlayerToken = input("Choose one to put in the table or 'take' if you don't have any token to play or write exit to close the game: ")
             return inputPlayerToken
 
     def take(self,inputPlayerToken):
