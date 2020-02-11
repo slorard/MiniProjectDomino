@@ -42,8 +42,8 @@ def countPoints():
     tablePoint = abs(int(eval(join)))
     boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
     allDominoPoints = 168
-    tablePoint += boxDominoPoint
-    return int(allDominoPoints - tablePoint)
+    totalPoints = tablePoint + boxDominoPoint
+    return int(allDominoPoints - totalPoints)
 
 def block():
         countTokenDoesntGo = 0
