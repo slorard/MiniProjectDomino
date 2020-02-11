@@ -1,10 +1,7 @@
 from Player import Player
 from Table import Table, dominoesTokens, generateTokens
-import os
-import random
-import time
 from playsound import playsound
-import threading
+import os, random, time, threading
 
 playerList = []
 
@@ -23,7 +20,10 @@ def createPlayer():
     for i in range (int(inputNumPlayer)): #Create the players in a list
         playerList.append(Player(input("Write name of player {}: ".format(i + 1))))
         playerList[i].TakeHand(dominoesTokens)
+    os.system("clear")
+    print("Mixing...")
     playsound('./music/baraje2.mp3')
+    os.system("clear")
 
 def playerTurnFirst():
     playerTurn = 0
@@ -39,10 +39,11 @@ def playerTurnFirst():
 
 def countPoints():
     join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")
-    tablePoint = (abs(int(eval(join))))
-    if dominoesTokens != []:
-        tablePoint += abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
-    return int(168 - tablePoint)
+    tablePoint = abs(int(eval(join)))
+    boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
+    allDominoPoints = 168
+    tablePoint += boxDominoPoint
+    return int(allDominoPoints - tablePoint)
 
 def block():
         countTokenDoesntGo = 0
@@ -94,6 +95,7 @@ def askAgainPlay(turns):
             turns -= 1
             start()
         elif playAgain.upper() == "N":
+            os.system("clear")
             print('Thanks for play! :D')
             time.sleep(1.5)
             os._exit(1)
@@ -108,6 +110,7 @@ def checkWin(turns):
                     playerTurnFirst()
                     start()
                 elif playAgainLoop.upper() == "N":
+                    os.system("clear")
                     print("Thanks for play! :D")
                     time.sleep(1.5)
                     os._exit(1)

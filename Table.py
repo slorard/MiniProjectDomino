@@ -1,6 +1,4 @@
-import random 
-import os
-import time
+import os, time, random
 dominoesTokens = []
 
 file = open("./iniciodomino.txt", "r")

@@ -1,5 +1,5 @@
 from Table import Table, dominoesTokens
-import os
+import os,time
 
 class Player:
     def __init__(self,name):
@@ -29,15 +29,15 @@ class Player:
             maxTokeHand.append(eval(i.replace("-","+")))
         return self.hand[maxTokeHand.index(max(maxTokeHand))]
 
-    def tokensYouCanPlay(self):
-        tokensYouCanPlay = 0
+    def tokensYouCantPlay(self):
+        tokensYouCantPlay = 0
         if Table.tableDomino != []:
             for hand in self.hand:
                 if hand[0] != Table.join[0] and hand[0] != Table.join[-1] and hand[2] != Table.join[0] and hand[2] != Table.join[-1]:
-                    tokensYouCanPlay += 1
+                    tokensYouCantPlay += 1
                 else:
                     break
-        return tokensYouCanPlay
+        return tokensYouCantPlay
 
     def inputToken(self):
         if Table.tableDomino == []:
@@ -55,7 +55,8 @@ class Player:
             print(f"{self.name} There is no token on the table to take.")
             self.showHand()
             self.dropTokens()
-        if self.tokensYouCanPlay() == len(self.hand):
+
+        if self.tokensYouCantPlay() == len(self.hand):
             if dominoesTokens != []:
                 Input = input('Want to take One token from the rest?, Y/N ')
                 if Input.upper() == 'Y':
@@ -76,11 +77,11 @@ class Player:
             self.dropTokens()
 
     def playerPass(self,inputPlayerToken):
-        if self.tokensYouCanPlay() == len(self.hand) and dominoesTokens == []:
+        if self.tokensYouCantPlay() == len(self.hand) and dominoesTokens == []:
             os.system("clear")
             Player(self.name)
         else:
-            if self.tokensYouCanPlay() != len(self.hand):
+            if self.tokensYouCantPlay() != len(self.hand):
                 os.system("clear")
                 print("You have token to play, you can't pass.")
                 self.showHand()
@@ -91,9 +92,11 @@ class Player:
                 self.showHand()
                 self.dropTokens()
 
-    def close(self,inputPlayerToker):
-        if inputPlayerToker == 'exit':
-            os._exit(1)
+    def close(self):
+        os.system("clear")
+        print("Thanks for play! :D")
+        time.sleep(1.5)
+        os._exit(1)
 
     def playMaxTokenValidation(self,inputPlayerToken):
         if Table.tableDomino == [] and self.maxToken() != self.hand[int(inputPlayerToken)-1]:
@@ -113,7 +116,8 @@ class Player:
 
     def dropTokens(self):
         inputPlayerToken = self.inputToken()
-        self.close(inputPlayerToken)
+        if inputPlayerToken == 'exit':
+            self.close()
         if inputPlayerToken.lower() == 'take':
             self.take(inputPlayerToken)
         if inputPlayerToken.lower() == "pass":
