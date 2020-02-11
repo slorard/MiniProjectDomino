@@ -1,10 +1,7 @@
 from Player import Player
 from Table import Table, dominoesTokens, generateTokens
-import os
-import random
-import time
 from playsound import playsound
-import threading
+import os, random, time, threading
 
 playerList = []
 
@@ -23,7 +20,10 @@ def createPlayer():
     for i in range (int(inputNumPlayer)): #Create the players in a list
         playerList.append(Player(input("Write name of player {}: ".format(i + 1))))
         playerList[i].TakeHand(dominoesTokens)
+    os.system("clear")
+    print("Mixing...")
     playsound('./music/baraje2.mp3')
+    os.system("clear")
 
 def playerTurnFirst():
     playerTurn = 0
@@ -39,10 +39,11 @@ def playerTurnFirst():
 
 def countPoints():
     join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")
-    totalPoint = (abs(int(eval(join))))
-    if dominoesTokens != []:
-        totalPoint += abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
-    return int(168 - totalPoint)
+    tablePoint = abs(int(eval(join)))
+    boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
+    allDominoPoints = 168
+    tablePoint += boxDominoPoint
+    return int(allDominoPoints - tablePoint)
 
 def block():
         countTokenDoesntGo = 0
@@ -54,13 +55,18 @@ def block():
             for tokens in dominoesTokens:
                 if Table.join[0] != tokens[0] and Table.join[0] != tokens[-1] and Table.join[-1] != tokens[0] and Table.join[-1] != tokens[-1]:
                     tokensGoOfDominoesToken += 1
+                else:
+                    break
 
-            if Table.tableDomino != [] and tokensGoOfDominoesToken == len(dominoesTokens):
+            if tokensGoOfDominoesToken == len(dominoesTokens):
                 for player in playerList:
                     lenHands += len(player.hand)
                     for i in range(len(player.hand)):
                         if player.hand[i][0] != Table.join[0] and player.hand[i][0] != Table.join[-1] and player.hand[i][2] != Table.join[0] and player.hand[i][2] != Table.join[-1]:
                             countTokenDoesntGo += 1
+                        else:
+                            break
+
                 if countTokenDoesntGo == lenHands:
                     return True
 
@@ -68,18 +74,16 @@ def againPlay(player):
     os.system('clear')
     if Table.tableDomino != []:
         player.points += countPoints()
-
-    if Table.tableDomino != [] and block():
-        print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
-    elif Table.tableDomino != [] and player.hand == []:
-        print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
+        if block():
+            print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
+        elif player.hand == []:
+            print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
 
     Table.join = None
     Table.tableDomino = []
 
     generateTokens()
     random.shuffle(dominoesTokens)
-
     for player in playerList:
         player.hand = []
         player.TakeHand(dominoesTokens)
@@ -91,6 +95,7 @@ def askAgainPlay(turns):
             turns -= 1
             start()
         elif playAgain.upper() == "N":
+            os.system("clear")
             print('Thanks for play! :D')
             time.sleep(1.5)
             os._exit(1)
@@ -105,10 +110,10 @@ def checkWin(turns):
                     playerTurnFirst()
                     start()
                 elif playAgainLoop.upper() == "N":
+                    os.system("clear")
                     print("Thanks for play! :D")
                     time.sleep(1.5)
                     os._exit(1)
-
 
 def start():
     turns = playerTurnFirst()
