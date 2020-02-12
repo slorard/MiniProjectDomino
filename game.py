@@ -40,10 +40,11 @@ def playerTurnFirst():
 def countPoints():
     join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")
     tablePoint = abs(int(eval(join)))
-    boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
     allDominoPoints = 168
-    totalPoints = tablePoint + boxDominoPoint
-    return int(allDominoPoints - totalPoints)
+    if dominoesTokens != []:
+        boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
+        tablePoint += boxDominoPoint
+    return int(allDominoPoints - tablePoint)
 
 def block():
         countTokenDoesntGo = 0
@@ -52,13 +53,14 @@ def block():
         Table.showDominos()
 
         if Table.tableDomino != []:
-            for tokens in dominoesTokens:
-                if Table.join[0] != tokens[0] and Table.join[0] != tokens[-1] and Table.join[-1] != tokens[0] and Table.join[-1] != tokens[-1]:
-                    tokensGoOfDominoesToken += 1
-                else:
-                    break
+            if dominoesTokens != []:
+                for tokens in dominoesTokens:
+                    if Table.join[0] != tokens[0] and Table.join[0] != tokens[-1] and Table.join[-1] != tokens[0] and Table.join[-1] != tokens[-1]:
+                        tokensGoOfDominoesToken += 1
+                    else:
+                        break
 
-            if tokensGoOfDominoesToken == len(dominoesTokens):
+            if tokensGoOfDominoesToken == len(dominoesTokens) or dominoesTokens == []:
                 for player in playerList:
                     lenHands += len(player.hand)
                     for i in range(len(player.hand)):
@@ -92,7 +94,6 @@ def askAgainPlay(turns):
     while True:
         playAgain = input("Do you want to keep playing?, Y/N ")
         if playAgain.upper() == "Y":
-            turns -= 1
             start()
         elif playAgain.upper() == "N":
             os.system("clear")
@@ -120,7 +121,7 @@ def start():
     while True:
         if playerList[turns-1].hand == [] or block():
             againPlay(playerList[turns-1])
-            turns -= 2
+            turns += 2
             askAgainPlay(turns)
 
         checkWin(turns)
