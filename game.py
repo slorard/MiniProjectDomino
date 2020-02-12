@@ -78,7 +78,7 @@ def againPlay(player):
         player.points += countPoints()
         if block():
             print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
-        elif player.hand == []:
+        else:
             print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
 
     Table.join = None
@@ -94,6 +94,10 @@ def askAgainPlay(turns):
     while True:
         playAgain = input("Do you want to keep playing?, Y/N ")
         if playAgain.upper() == "Y":
+            if int(playerList[turns].points) >= 200:
+                os.system("clear")
+                createPlayer()
+                playerTurnFirst()
             start()
         elif playAgain.upper() == "N":
             os.system("clear")
@@ -101,33 +105,16 @@ def askAgainPlay(turns):
             time.sleep(1.5)
             os._exit(1)
 
-def checkWin(turns):
-    if int(playerList[turns].points) >= 200:
-            print(f"{playerList[turns].name} has won with {playerList[turns].points} points")
-            while True:
-                playAgainLoop = input("Do you want to keep playing?, Y/N ")
-                if playAgainLoop.upper() == "Y":
-                    createPlayer()
-                    playerTurnFirst()
-                    start()
-                elif playAgainLoop.upper() == "N":
-                    os.system("clear")
-                    print("Thanks for play! :D")
-                    time.sleep(1.5)
-                    os._exit(1)
-
 def start():
     turns = playerTurnFirst()
     while True:
-        if playerList[turns-1].hand == [] or block():
+        if playerList[turns-1].hand == [] or block() or int(playerList[turns].points) >= 200:
             againPlay(playerList[turns-1])
+            askAgainPlay(turns)
             if inputNumPlayer == 2 or inputNumPlayer == 4:
                 turns += 2
             else:
                 turns += 3
-            askAgainPlay(turns)
-
-        checkWin(turns)
 
         playerList[turns].showHand()
         playerList[turns].dropTokens()

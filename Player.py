@@ -47,7 +47,21 @@ class Player:
             return inputPlayerToken
         else:
             inputPlayerToken = input("Choose one to put in the table or 'take' if you don't have any token to play or write exit to close the game: ")
-            return inputPlayerToken
+            
+            try:
+                inputPlayerToken = int(inputPlayerToken)
+
+                if int(inputPlayerToken) <= len(self.hand) and int(inputPlayerToken) >= 1:
+                    return inputPlayerToken
+                else:
+                    os.system("clear")
+                    print("You don't have that token, choose a correct token.")
+                    self.showHand()
+                    self.dropTokens()
+                
+            except:
+                return inputPlayerToken
+
 
     def take(self,inputPlayerToken):
         if dominoesTokens == []:
@@ -122,33 +136,30 @@ class Player:
             self.take(inputPlayerToken)
         if inputPlayerToken.lower() == "pass":
             self.playerPass(inputPlayerToken)
-        try:
-            if int(inputPlayerToken) <= len(self.hand) and int(inputPlayerToken) >= 1:
-                self.playMaxTokenValidation(inputPlayerToken)
-                if Table.tableDomino != []:
-                    place = input('Choose what place you want to put, write L(left) or R(right): ')
-                    # you can't place a token in the position 1 if that token doesn't go there
-                    if place.upper() == "L" and Table.join[0] != self.hand[int(inputPlayerToken)-1][-1] or place.upper() == "R" and Table.join[-1] != self.hand[int(inputPlayerToken)-1][0]:
-                        self.rotateToken(inputPlayerToken, place)
-                    else:
-                        if place.upper() == "L" or place.upper() == "R":#in case you put an invalid position
-                            Table.appendTokens(self.hand.pop(int(inputPlayerToken)-1), place.upper())
-                        else:
-                            os.system("clear")
-                            print("Wrong place, choose a place that is correct.")
-                            self.showHand()
-                            self.dropTokens()
+        if inputPlayerToken != "pass" and inputPlayerToken != "take" and inputPlayerToken != "exit":
+            os.system("clear")
+            print("Wrong token, choose a token that is correct.")
+            self.showHand()
+            self.dropTokens()
+        # if int(inputPlayerToken) <= len(self.hand) and int(inputPlayerToken) >= 1:
+            self.playMaxTokenValidation(inputPlayerToken)
+            if Table.tableDomino != []:
+                place = input('Choose what place you want to put, write L(left) or R(right): ')
+                # you can't place a token in the position 1 if that token doesn't go there
+                if place.upper() == "L" and Table.join[0] != self.hand[int(inputPlayerToken)-1][-1] or place.upper() == "R" and Table.join[-1] != self.hand[int(inputPlayerToken)-1][0]:
+                    self.rotateToken(inputPlayerToken, place)
                 else:
-                    Table.appendTokens(self.hand.pop(int(inputPlayerToken)-1), "L")
+                    if place.upper() == "L" or place.upper() == "R":#in case you put an invalid position
+                        Table.appendTokens(self.hand.pop(int(inputPlayerToken)-1), place.upper())
+                    else:
+                        os.system("clear")
+                        print("Wrong place, choose a place that is correct.")
+                        self.showHand()
+                        self.dropTokens()
             else:
-                os.system("clear")
-                print("You don't have that token, choose a correct token.")
-                self.showHand()
-                self.dropTokens()
-        except:
-            if inputPlayerToken.lower() != "pass" and inputPlayerToken.lower() != "take":
-                os.system("clear")
-                print("Wrong token, choose a token that is correct.")
-                self.showHand()
-                self.dropTokens()
-                
+                Table.appendTokens(self.hand.pop(int(inputPlayerToken)-1), "L")
+        # else:
+        #     os.system("clear")
+        #     print("You don't have that token, choose a correct token.")
+        #     self.showHand()
+        #     self.dropTokens()
