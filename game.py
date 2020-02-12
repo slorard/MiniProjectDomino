@@ -121,7 +121,10 @@ def start():
     while True:
         if playerList[turns-1].hand == [] or block():
             againPlay(playerList[turns-1])
-            turns += 2
+            if inputNumPlayer == 2 or inputNumPlayer == 4:
+                turns += 2
+            else:
+                turns += 3
             askAgainPlay(turns)
 
         checkWin(turns)
