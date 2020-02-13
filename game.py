@@ -80,7 +80,8 @@ def askAgainPlay(player):
             if player.points >= 200:
                 os.system("python -B game.py") or os.system("python3 game.py")
             else:
-                start()
+                os.system("clear")
+                break
         elif playAgain.upper() == "N":
             os.system("clear")
             print('Thanks for play! :D')
@@ -116,10 +117,7 @@ def start():
     while True:
         if playerList[turns-1].hand == [] or block() or int(playerList[turns-1].points) >= 200:
             againPlay(playerList[turns-1])
-            if inputNumPlayer == 2 or inputNumPlayer == 4:
-                turns += 2
-            else:
-                turns += 3
+            turns -= 1
 
         playerList[turns].showHand()
         playerList[turns].dropTokens()
