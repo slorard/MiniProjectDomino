@@ -53,6 +53,8 @@ class Player:
         if dominoesTokens == []:
             os.system("clear")
             print(f"{self.name} There is no token on the table to take.")
+            time.sleep(2)
+            os.remove("__pycache__")
             self.showHand()
             self.dropTokens()
 
@@ -62,17 +64,22 @@ class Player:
                 if Input.upper() == 'Y':
                     os.system("clear")
                     self.hand.append(dominoesTokens.pop())
+                    os.remove("__pycache__")
                     self.showHand()
                     self.dropTokens()
                 else:
                     os.system("clear")
                     if Input.upper() != "N":
                         print("Write Y or N.")
+                    time.sleep(2)
+                    os.remove("__pycache__")
                     self.showHand()
                     self.dropTokens()
         else:
             os.system("clear")
             print("You can't take, because you have tokens to play.")
+            time.sleep(2)
+            os.remove("__pycache__")
             self.showHand()
             self.dropTokens()
 
@@ -84,11 +91,15 @@ class Player:
             if self.tokensYouCantPlay() != len(self.hand):
                 os.system("clear")
                 print("You have token to play, you can't pass.")
+                time.sleep(2)
+                os.remove("__pycache__")
                 self.showHand()
                 self.dropTokens()
             else:
                 os.system("clear")
                 print("You can take token of the table, you can't pass.")
+                time.sleep(2)
+                os.remove("__pycache__")
                 self.showHand()
                 self.dropTokens()
 
@@ -102,8 +113,11 @@ class Player:
         if Table.tableDomino == [] and self.maxToken() != self.hand[int(inputPlayerToken)-1]:
                 os.system("clear")
                 print(f"You have to play your highest value token, you have to play {self.maxToken()}")
+                time.sleep(2)
+                os.remove("__pycache__")
                 self.showHand()
                 self.dropTokens()
+
 
     def rotateToken(self, inputPlayerToken, place):
         if place.upper() == "L" and Table.join[0] == self.hand[int(inputPlayerToken)-1][0] or place.upper() == "R" and Table.join[-1] == self.hand[int(inputPlayerToken)-1][-1]:
@@ -111,6 +125,8 @@ class Player:
         else:
             os.system("clear")
             print(f"That token does not go there.")
+            time.sleep(2)
+            os.remove("__pycache__")
             self.showHand()
             self.dropTokens()
 
@@ -136,6 +152,8 @@ class Player:
                         else:
                             os.system("clear")
                             print("Wrong place, choose a place that is correct.")
+                            time.sleep(2)
+                            os.remove("__pycache__")
                             self.showHand()
                             self.dropTokens()
                 else:
@@ -143,11 +161,15 @@ class Player:
             else:
                 os.system("clear")
                 print("You don't have that token, choose a correct token.")
+                time.sleep(2)
+                os.remove("__pycache__")
                 self.showHand()
                 self.dropTokens()
         except:
             if inputPlayerToken != "pass" and inputPlayerToken != "take" and inputPlayerToken != "exit":
                 os.system("clear")
                 print("Wrong token, choose a token that is correct.")
+                time.sleep(2)
+                os.remove("__pycache__")
                 self.showHand()
                 self.dropTokens()
