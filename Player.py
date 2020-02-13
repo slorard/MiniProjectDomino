@@ -67,7 +67,7 @@ class Player:
                 else:
                     os.system("clear")
                     if Input.upper() != "N":
-                        print("You can't take that token.")
+                        print("Write Y or N.")
                     self.showHand()
                     self.dropTokens()
         else:
@@ -116,7 +116,7 @@ class Player:
 
     def dropTokens(self):
         inputPlayerToken = self.inputToken()
-        if inputPlayerToken == 'exit':
+        if inputPlayerToken.lower() == 'exit':
             self.close()
         if inputPlayerToken.lower() == 'take':
             self.take(inputPlayerToken)
@@ -146,9 +146,8 @@ class Player:
                 self.showHand()
                 self.dropTokens()
         except:
-            if inputPlayerToken.lower() != "pass" and inputPlayerToken.lower() != "take":
+            if inputPlayerToken != "pass" and inputPlayerToken != "take" and inputPlayerToken != "exit":
                 os.system("clear")
                 print("Wrong token, choose a token that is correct.")
                 self.showHand()
                 self.dropTokens()
-                

@@ -44,7 +44,7 @@ def countPoints():
     if dominoesTokens != []:
         boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
         tablePoint += boxDominoPoint
-    return int(allDominoPoints - tablePoint)
+    return abs(int(allDominoPoints - tablePoint))
 
 def block():
         countTokenDoesntGo = 0
@@ -72,62 +72,54 @@ def block():
                 if countTokenDoesntGo == lenHands:
                     return True
 
-def againPlay(player):
-    os.system('clear')
-    if Table.tableDomino != []:
-        player.points += countPoints()
-        if block():
-            print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
-        elif player.hand == []:
-            print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
 
-    Table.join = None
-    Table.tableDomino = []
-
-    generateTokens()
-    random.shuffle(dominoesTokens)
-    for player in playerList:
-        player.hand = []
-        player.TakeHand(dominoesTokens)
-
-def askAgainPlay(turns):
+def askAgainPlay(player):
     while True:
         playAgain = input("Do you want to keep playing?, Y/N ")
         if playAgain.upper() == "Y":
-            start()
+            if player.points >= 200:
+                os.system("python -B game.py") or os.system("python3 game.py")
+            else:
+                start()
         elif playAgain.upper() == "N":
             os.system("clear")
             print('Thanks for play! :D')
             time.sleep(1.5)
             os._exit(1)
 
-def checkWin(turns):
-    if int(playerList[turns].points) >= 200:
-            print(f"{playerList[turns].name} has won with {playerList[turns].points} points")
-            while True:
-                playAgainLoop = input("Do you want to keep playing?, Y/N ")
-                if playAgainLoop.upper() == "Y":
-                    createPlayer()
-                    playerTurnFirst()
-                    start()
-                elif playAgainLoop.upper() == "N":
-                    os.system("clear")
-                    print("Thanks for play! :D")
-                    time.sleep(1.5)
-                    os._exit(1)
+def againPlay(player):
+    os.system('clear')
+    if Table.tableDomino != []:
+        player.points += countPoints()
+        if block():
+            print(f"{player.name} has block with {countPoints()} points, now has {player.points} points.")
+        else:
+            print(f"{player.name} has won with {countPoints()} points, now has {player.points} points.")
+
+    askAgainPlay(player)
+
+    Table.join = None
+    Table.tableDomino = []
+
+    generateTokens()
+    random.shuffle(dominoesTokens)
+
+    
+    if player.points < 200:
+        for players in playerList:
+            players.points = 0
+            players.hand = []
+            players.TakeHand(dominoesTokens)
 
 def start():
     turns = playerTurnFirst()
     while True:
-        if playerList[turns-1].hand == [] or block():
+        if playerList[turns-1].hand == [] or block() or int(playerList[turns-1].points) >= 200:
             againPlay(playerList[turns-1])
             if inputNumPlayer == 2 or inputNumPlayer == 4:
                 turns += 2
             else:
                 turns += 3
-            askAgainPlay(turns)
-
-        checkWin(turns)
 
         playerList[turns].showHand()
         playerList[turns].dropTokens()
