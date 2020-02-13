@@ -11,7 +11,7 @@
 
  * Open the folder and right click
  * select "Bash Here"
- * Run the following command: python game.py
+ * Run the following command: python -B game.py or if you are user linuxpython3 -B game.py
  
  Enjoy playing!!
  
