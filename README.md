@@ -62,7 +62,6 @@ after that you have to choose one of the sides you want to play your token:
 
 # Tools used in this project
 
- * Oriented object programming
  * Python Language
  * Terminal 
 
