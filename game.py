@@ -72,7 +72,6 @@ def block():
                 if countTokenDoesntGo == lenHands:
                     return True
 
-
 def askAgainPlay(player):
     while True:
         playAgain = input("Do you want to keep playing?, Y/N ")
@@ -105,7 +104,6 @@ def againPlay(player):
     generateTokens()
     random.shuffle(dominoesTokens)
 
-    
     if player.points < 200:
         for players in playerList:
             players.points = 0
