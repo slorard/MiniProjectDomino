@@ -27,7 +27,7 @@ class Table:
 
     def showDominos(self):
         self.join = " ".join(self.tableDomino)
-        return(self.join)
+        return self.join
 
 def generateTokens():
     for faceL in range(0,7):

@@ -17,8 +17,10 @@ class Player:
         numToken = []
         for i in range(len(self.hand)):
             numToken.append(f"   {str(i+1)}  ")
+
         if Table.tableDomino != []:
             print(Table.showDominos())
+
         print(f"It's the turns of: {self.name}.")
         print("|"," | ".join(self.hand),"|")
         print("".join(numToken))
@@ -106,8 +108,8 @@ class Player:
             self.dropTokens()
 
     def rotateToken(self, inputPlayerToken, place):
-        if (place.upper() == "L" and Table.join[0]) == self.hand[int(inputPlayerToken)-1][0] or place.upper() == "R" and Table.join[-1] == self.hand[int(inputPlayerToken)-1][-1]:
-            Table.appendTokens(self.hand.pop(int(inputPlayerToken)-1)[::-1], place.upper())#rotate token
+        if place.upper() == "L" and Table.join[0] == self.hand[int(inputPlayerToken)-1][0] or place.upper() == "R" and Table.join[-1] == self.hand[int(inputPlayerToken)-1][-1]:
+            Table.appendTokens(self.hand.pop(int(inputPlayerToken)-1)[::-1], place.upper())
         else:
             os.system("clear")
             print(f"That token does not go there.")
@@ -123,7 +125,6 @@ class Player:
         if inputPlayerToken.lower() == "pass":
             self.playerPass(inputPlayerToken)
         try:
-            
             if int(inputPlayerToken) <= len(self.hand) and int(inputPlayerToken) >= 1:
                 self.playMaxTokenValidation(int(inputPlayerToken))
                 if Table.tableDomino != []:

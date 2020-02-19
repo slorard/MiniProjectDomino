@@ -12,12 +12,14 @@ while True:
             os.system('clear')
             break
         else:
+            os.system("clear")
             print("That number isn't valid, please write one between 2-4")
     except:
+        os.system("clear")
         print('Write a real number')
 
 def createPlayer():
-    for i in range (int(inputNumPlayer)): #Create the players in a list
+    for i in range(int(inputNumPlayer)): #Create the players in a list
         playerList.append(Player(input("Write name of player {}: ".format(i + 1))))
         playerList[i].TakeHand(dominoesTokens)
     os.system("clear")
@@ -38,13 +40,13 @@ def playerTurnFirst():
     return playerTurn
 
 def countPoints():
-    join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")
-    tablePoint = abs(int(eval(join)))
+    join = " ".join(Table.tableDomino).replace("-", "+").replace(" ", "+")#sum the all points the table
+    tablePoints = abs(int(eval(join)))
     allDominoPoints = 168
     if dominoesTokens != []:
         boxDominoPoint = abs(int(eval(" ".join(dominoesTokens).replace("-","+").replace(" ", "+"))))
-        tablePoint += boxDominoPoint
-    return abs(int(allDominoPoints - tablePoint))
+        tablePoints += boxDominoPoint
+    return abs(int(allDominoPoints - tablePoints))
 
 def block():
         countTokenDoesntGo = 0
@@ -52,6 +54,7 @@ def block():
         tokensGoOfDominoesToken = 0
         Table.showDominos()
 
+        #count the tokens inside the domino box you can't play
         if Table.tableDomino != []:
             if dominoesTokens != []:
                 for tokens in dominoesTokens:
@@ -59,7 +62,7 @@ def block():
                         tokensGoOfDominoesToken += 1
                     else:
                         break
-
+            #count the tokens the players they can't play
             if tokensGoOfDominoesToken == len(dominoesTokens) or dominoesTokens == []:
                 for player in playerList:
                     lenHands += len(player.hand)
@@ -68,7 +71,7 @@ def block():
                             countTokenDoesntGo += 1
                         else:
                             break
-
+                #compare if the all tokens the players can't play
                 if countTokenDoesntGo == lenHands:
                     return True
 
@@ -98,6 +101,10 @@ def againPlay(player):
 
     askAgainPlay(player)
 
+    if dominoesTokens != []:#clear the box domino
+        for i in range(len(dominoesTokens)):
+            dominoesTokens.pop()
+
     Table.join = None
     Table.tableDomino = []
 
@@ -118,9 +125,11 @@ def start():
             turns -= 1
 
         playerList[turns].showHand()
+        print(len(dominoesTokens))
         playerList[turns].dropTokens()
         playsound('./music/golpe.mp3')
 
+        #change the turns
         if turns+1 < int(inputNumPlayer):
             turns += 1
         else:
