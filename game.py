@@ -4,6 +4,7 @@ from playsound import playsound
 import os, random, time, threading
 
 playerList = []#list the players that gonna play
+a = True
 
 while True:
     inputNumPlayer = input('How many wants to play? ')#Introduce How many players gonna play
@@ -76,19 +77,21 @@ def block():
                     return True
 
 def askAgainPlay(player):#Ask if you want to play again
-    while True:
-        playAgain = input("Do you want to keep playing?, Y/N ")
-        if playAgain.upper() == "Y":
-            if player.points >= 200:#if one of the player reach to the 200 points asks if you want to play again and reboot the game
-                os.system("python -B game.py") or os.system("python3 game.py")
-            else:
-                os.system("clear")
-                break #if you win a round then you play again to reach 200 points
-        elif playAgain.upper() == "N":
-            os.system("clear")#close the game
-            print('Thanks for play! :D')
-            time.sleep(1.5)
-            os._exit(1)
+    playAgain = input("Do you want to keep playing?, Y/N ")
+    if playAgain.upper() == "Y":
+        if player.points >= 200:#if one of the player reach to the 200 points asks if you want to play again and reboot the game
+            os.system("python -B game.py") or os.system("python3 game.py")
+        else:
+            os.system("clear")
+    elif playAgain.upper() == "N":
+        os.system("clear")#close the game
+        print('Thanks for play! :D')
+        time.sleep(1.5)
+        os._exit(1)
+    else:
+        os.system("clear")
+        print("Write Y or N")
+        askAgainPlay(player)
 
 def againPlay(player): #Methd when you win a round delete the tokens what still have the others players and count the points and create the tokens again 
     os.system('clear')
@@ -116,27 +119,31 @@ def againPlay(player): #Methd when you win a round delete the tokens what still 
         players.hand = []
         players.TakeHand(dominoesTokens)
 
-def start():
-    turns = playerTurnFirst()#The player who play first
-    while True:
-        if playerList[turns-1].hand == [] or block() or int(playerList[turns-1].points) >= 200:# If palyer wins and play again return the player who won  or verify if a player have 200 points
-            againPlay(playerList[turns-1])
-            turns -= 1
-        #shows the players hand
-        playerList[turns].showHand()
-        playerList[turns].dropTokens()#put a token on the table :V
-        playsound('./music/golpe.mp3')
 
-        #change the turns
-        if turns+1 < int(inputNumPlayer):
-            turns += 1
-        else:
-            turns = 0
+def start():
+    global turns
+    if playerList[turns-1].hand == [] or block() or int(playerList[turns-1].points) >= 200:# If palyer wins and play again return the player who won  or verify if a player have 200 points
+        againPlay(playerList[turns-1])
+        turns -= 1
+
+    #shows the players hand
+    playerList[turns].showHand()
+    playerList[turns].dropTokens()#put a token on the table :V
+    playsound('./music/golpe.mp3')
+
+    #change the turns
+    if turns+1 < int(inputNumPlayer):
+        turns += 1
+    else:
+        turns = 0
+
+    start()
 
 def music():
     playsound('./music/Bachata.mp3')
 
 createPlayer()
+turns = playerTurnFirst()#The player who play first
 
 thread1 = threading.Thread(target= start)
 thread2 = threading.Thread(target= music)
