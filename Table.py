@@ -12,8 +12,8 @@ os.system("clear")
 
 class Table:
     def __init__(self, tokens):
-        self.tokens = tokens
-        self.tableDomino = []
+        self.tokens = tokens#the tokens what the table gonna receive later
+        self.tableDomino = []#the tokens what players put 
         self.join = None
 
     def appendTokens(self, tokensOfPlayer, place):
@@ -25,11 +25,11 @@ class Table:
             os.system("clear")
             return self.tableDomino
 
-    def showDominos(self):
+    def showDominos(self):#convert in a string the list of the tokens what players put on the table to delete the parenthesis
         self.join = " ".join(self.tableDomino)
         return self.join
 
-def generateTokens():
+def generateTokens():#create all the dominoes tokens that contains two faces of values
     for faceL in range(0,7):
         for faceR in range(faceL,7):
             faces = str(faceL) + '-' + str(faceR)
